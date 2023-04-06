@@ -1,6 +1,7 @@
 # Jira Clone Frontend - Final Assessment Project
 
-A Jira-like ticket tracker built with MERN stack by 3 fullstack web dev students.
+A Jira-like ticket tracker built with MERN stack by 3 fullstack web dev students:
+Michael Fernandez, Jenny Webster & Enzo Morales.
 
 ## Overview
 
