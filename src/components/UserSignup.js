@@ -3,6 +3,7 @@ import "./UserSignupAndLogin.css";
 import axios from "axios";
 
 const TOKEN_KEY = process.env.REACT_APP_TOKEN_HEADER_KEY;
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 const UserSignup = () => {
   const valuesReset = {
@@ -29,7 +30,7 @@ const UserSignup = () => {
   };
 
   const postNewUser = async () => {
-    const { data } = await axios.post("http://localhost:8000/users/register", {
+    const { data } = await axios.post(API_BASE_URL + "users/register", {
       name: newUser.name,
       email: newUser.email,
       password: newUser.password,
