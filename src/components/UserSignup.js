@@ -5,16 +5,16 @@ import axios from "axios";
 const TOKEN_KEY = process.env.REACT_APP_TOKEN_HEADER_KEY;
 
 const UserSignup = () => {
-  const resetForm = {
+  const valuesReset = {
     name: "",
     email: "",
     password: "",
     repeatPassword: "",
   };
 
-  const [newUser, setNewUser] = useState(resetForm);
-
+  const [newUser, setNewUser] = useState(valuesReset);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState(valuesReset);
 
   if (error) console.log(error);
 
@@ -24,6 +24,8 @@ const UserSignup = () => {
       ...prev,
       [name]: value,
     }));
+    setMessage(valuesReset);
+    setError("");
   };
 
   const postNewUser = async () => {
@@ -42,16 +44,32 @@ const UserSignup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (newUser.password !== newUser.repeatPassword) {
+      setMessage((prev) => ({
+        ...message,
+        password: "No match!",
+        repeatPassword: "No match!",
+      }));
+      return;
+    }
     postNewUser();
-    setNewUser(resetForm);
+    setNewUser(valuesReset);
   };
 
   return (
     <div className="sign-up-card">
-      <form className="sign-up-form" onSubmit={(e) => handleSubmit(e)}>
+      <form
+        className="sign-up-form"
+        onSubmit={(e) => handleSubmit(e)}
+        autoComplete="off"
+      >
         <div className="title">TICKET MANAGER</div>
         <p className="sign-up-title">Sign up</p>
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">
+          Name<span className="name message"></span>
+        </label>
+
         <input
           type="text"
           name="name"
@@ -67,7 +85,10 @@ const UserSignup = () => {
           value={newUser.email}
           onChange={handleChange}
         />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">
+          Password
+          <span className="password-message">{message.password}</span>
+        </label>
         <input
           type="password"
           name="password"
@@ -75,7 +96,10 @@ const UserSignup = () => {
           value={newUser.password}
           onChange={handleChange}
         />
-        <label htmlFor="repeatPassword">Repeat password</label>
+        <label htmlFor="repeatPassword">
+          Repeat password
+          <span className="password-message">{message.repeatPassword}</span>
+        </label>
         <input
           type="password"
           name="repeatPassword"
@@ -83,6 +107,7 @@ const UserSignup = () => {
           value={newUser.repeatPassword}
           onChange={handleChange}
         />
+        <div className="error-message">{error}</div>
         <button className="submit-button" type="submit">
           Submit
         </button>
