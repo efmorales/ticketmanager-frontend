@@ -33,10 +33,20 @@
 }
 
 .sign-up-form label {
+    text-align: left;
     margin: .7em 0;
+    width: 100%;
+}
+
+label span {
+    float: right;
+    color: rgb(255, 60, 0);
 }
 
 .sign-up-form input {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.25rem;
+    padding: 0 1.25rem;
     margin-bottom: 1.25rem;
     border-style: none;
     border-radius: 5px;
@@ -54,4 +64,8 @@
     font-size: 2.25rem;
     color: #FFFFFF;
     background-color: #2151C5;
+}
+
+.error-message {
+    color:rgb(255, 60, 0);
 }
