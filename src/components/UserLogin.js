@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./UserSignupAndLogin.css";
 import axios from "axios";
 
@@ -79,6 +80,9 @@ const UserSignup = () => {
         <button className="submit-button" type="submit">
           Login
         </button>
+        <p className="login-register-link">
+          Not signed up yet? <Link to="../signup" >SIGN UP</Link>
+        </p>
       </form>
     </div>
   );
