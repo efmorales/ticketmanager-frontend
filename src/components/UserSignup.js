@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./UserSignupAndLogin.css";
 import axios from "axios";
 
@@ -30,16 +31,25 @@ const UserSignup = () => {
   };
 
   const postNewUser = async () => {
-    const { data } = await axios.post(API_BASE_URL + "users/register", {
+    const { data } = await axios.post(API_BASE_URL + "/users/register", {
       name: newUser.name,
       email: newUser.email,
       password: newUser.password,
     });
 
     if ("error" in data) {
-      setError(data.error);
+      if (data.error.includes("Email already in use.")) {
+        setMessage((prev) => ({
+          ...message,
+          email: "Email already in use.",
+        }));
+      } else {
+        setError(data.error);
+      }
+
     } else {
       localStorage.setItem(TOKEN_KEY, data.token);
+      setNewUser(valuesReset);
     }
   };
 
@@ -55,7 +65,6 @@ const UserSignup = () => {
       return;
     }
     postNewUser();
-    setNewUser(valuesReset);
   };
 
   return (
@@ -78,7 +87,10 @@ const UserSignup = () => {
           value={newUser.name}
           onChange={handleChange}
         />
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">
+          Email
+          <span className="input-message">{message.email}</span>
+        </label>
         <input
           type="text"
           name="email"
@@ -88,7 +100,7 @@ const UserSignup = () => {
         />
         <label htmlFor="password">
           Password
-          <span className="password-message">{message.password}</span>
+          <span className="input-message">{message.password}</span>
         </label>
         <input
           type="password"
@@ -99,7 +111,7 @@ const UserSignup = () => {
         />
         <label htmlFor="repeatPassword">
           Repeat password
-          <span className="password-message">{message.repeatPassword}</span>
+          <span className="input-message">{message.repeatPassword}</span>
         </label>
         <input
           type="password"
@@ -110,8 +122,11 @@ const UserSignup = () => {
         />
         <div className="error-message">{error}</div>
         <button className="submit-button" type="submit">
-          Submit
+          Sign Up
         </button>
+        <p className="login-register-link">
+          Already a user? <Link to="../login">LOGIN</Link>
+        </p>
       </form>
     </div>
   );
