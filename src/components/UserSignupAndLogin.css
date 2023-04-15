@@ -3,7 +3,6 @@
     width: 100vw;
     height: 100vh;
     color: #FFFFFF;
-    margin: 0;
 }
 
 .title {
@@ -21,18 +20,22 @@
     font-size: 1.25rem;
     background-color: #222328;
     height: 100%;
+    max-width: 44rem;
+    min-height: 1111px;
+    max-height: 1300px;
+    margin: auto;
 }
 
 .sign-up-form .sign-up-title {
     text-decoration: underline;
-    text-underline-offset: 0.2em;
+    text-underline-offset: 0.2rem;
     font-size: 1.5rem;
     margin-bottom: 1rem;
 }
 
 .sign-up-form label {
     text-align: left;
-    margin: .7em 0;
+    margin: .7rem 0;
     width: 100%;
 }
 
@@ -50,28 +53,43 @@ label span {
     border-radius: 5px;
     height: 3rem;
     width: 100%;
+    min-height: 40px;
     background-color: #D9D9D9;
 }
 
 .sign-up-form input:focus {
     outline: none;
-    box-shadow: 0 0 0 .25em #2151C5;
+    box-shadow: 0 0 0 .25rem #2151C5;
 }
 
 .submit-button {
     border: none;
     border-radius: 10px;
     padding: 1rem 0;
-    margin: auto 0 13rem 0;
+    margin: auto 0 7rem 0;
     width: 100%;
     font-size: 2.25rem;
-    color: #FFFFFF;
+    color: #ffffff;
     background-color: #2151C5;
 }
 
 .submit-button:focus {
     outline: none;
     box-shadow: 0 0 0 .25rem #2151C5;
+}
+
+.login-register-link {
+    width: 100%;
+    color: #e2e2e2;
+    margin: 0 0 6rem 0;
+}
+
+.login-register-link > a,
+a:hover,
+a:visited {
+    color: #205eef;
+    font-weight: 700;
+
 }
 
 .error-message {
