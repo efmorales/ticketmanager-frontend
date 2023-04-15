@@ -80,7 +80,7 @@ const UserSignup = () => {
         <button className="submit-button" type="submit">
           Login
         </button>
-        <p className="login-register-link">
+        <p className="login-signup-link">
           Not signed up yet? <Link to="../signup" >SIGN UP</Link>
         </p>
       </form>

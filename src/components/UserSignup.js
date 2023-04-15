@@ -124,7 +124,7 @@ const UserSignup = () => {
         <button className="submit-button" type="submit">
           Sign Up
         </button>
-        <p className="login-register-link">
+        <p className="login-signup-link">
           Already a user? <Link to="../login">LOGIN</Link>
         </p>
       </form>
