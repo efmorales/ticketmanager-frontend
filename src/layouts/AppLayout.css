@@ -1,4 +1,14 @@
 .app-header {
-  position: fixed;
+  display: flex;
+  justify-content: flex-end;
+  gap: 2rem;
   width: 100%;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: .125rem solid black;
+}
+
+.app-header a {
+  color: #fff !important;
+  text-decoration: none;
 }
