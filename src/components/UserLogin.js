@@ -29,7 +29,7 @@ const UserSignup = () => {
   };
 
   const postUser = async () => {
-    const { data } = await axios.post(API_BASE_URL + "users/login", {
+    const { data } = await axios.post(API_BASE_URL + "/users/login", {
       email: user.email,
       password: user.password,
     });
