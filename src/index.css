@@ -1,15 +1,15 @@
 *,
 *::before,
-*::after{
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html {
-}
+html {}
 
 body {
+  font-family: 'Inter', sans-serif;
   color: #fff;
   background-color: #222328;
 }
