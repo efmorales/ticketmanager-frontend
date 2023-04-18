@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./UserSignupAndLogin.css";
 import axios from "axios";
 
@@ -7,6 +7,8 @@ const TOKEN_KEY = process.env.REACT_APP_TOKEN_HEADER_KEY;
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 const UserSignup = () => {
+  const navigate = useNavigate();
+
   const valuesReset = {
     email: "",
     password: "",
@@ -38,6 +40,8 @@ const UserSignup = () => {
       setError(data.error);
     } else {
       localStorage.setItem(TOKEN_KEY, data.token);
+      setUser(valuesReset);
+      navigate("/");
     }
   };
 
@@ -45,7 +49,6 @@ const UserSignup = () => {
     e.preventDefault();
 
     postUser();
-    setUser(valuesReset);
   };
 
   return (
@@ -81,7 +84,7 @@ const UserSignup = () => {
           Login
         </button>
         <p className="login-signup-link">
-          Not signed up yet? <Link to="../signup" >SIGN UP</Link>
+          Not signed up yet? <Link to="../signup">SIGN UP</Link>
         </p>
       </form>
     </div>
