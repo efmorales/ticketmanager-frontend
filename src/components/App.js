@@ -11,6 +11,7 @@ import AppLayout from "../layouts/AppLayout";
 import Home from "./Home";
 import UserSignup from "./UserSignup";
 import UserLogin from "./UserLogin";
+import Projects from "./Projects";
 import Error from "./Error";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="login" element={<UserLogin />} />
         <Route path="signup" element={<UserSignup />} />
+        <Route path="projects" element={<Projects />} />
         <Route path="*" element={<Error />} />
       </Route>
     )
