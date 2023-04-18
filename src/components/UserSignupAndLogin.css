@@ -1,27 +1,25 @@
 .sign-up-card {
-    font-family: 'Inter', sans-serif;
-    width: 100vw;
-    height: 100vh;
-    color: #FFFFFF;
+    width: 100%;
+    height: 100%;
+    color: #FFF;
 }
 
 .title {
     font-family: 'Bebas Neue', cursive;
     font-size: 3.75rem;
-    margin: 1.5rem auto 4rem;
+    margin: 0 auto 4rem;
     width: 100%;
 }
 
 .sign-up-form {
     display: flex;
-    padding: 1rem 3rem 3rem;
+    padding: 0 3rem;
     flex-direction: column;
     align-items: flex-start;
     font-size: 1.25rem;
     background-color: #222328;
     height: 100%;
     max-width: 44rem;
-    min-height: 1111px;
     max-height: 1300px;
     margin: auto;
 }
@@ -69,8 +67,9 @@ label span {
     margin: auto 0 7rem 0;
     width: 100%;
     font-size: 2.25rem;
-    color: #ffffff;
+    color: #fff;
     background-color: #2151C5;
+    margin-top: 2rem;
 }
 
 .submit-button:focus {
@@ -81,7 +80,7 @@ label span {
 .login-signup-link {
     width: 100%;
     color: #e2e2e2;
-    margin: 0 0 6rem 0;
+    margin: 0 0 3rem 0;
 }
 
 .login-signup-link > a,
@@ -89,7 +88,6 @@ a:hover,
 a:visited {
     color: #205eef;
     font-weight: 700;
-
 }
 
 .error-message {
