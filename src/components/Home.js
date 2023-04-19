@@ -5,7 +5,7 @@ const Home = () => {
 
   return (
     <h1>
-      Hello{loggedInUser && ` ${loggedInUser.name}`}, welcome to the Ticket
+      Hello{loggedInUser && ` ${loggedInUser?.name}`}, welcome to the Ticket
       Manager Home Page!
     </h1>
   );
