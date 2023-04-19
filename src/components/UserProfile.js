@@ -5,8 +5,8 @@ const UserProfile = () => {
 
   return (
     <>
-      <h1>{loggedInUser.name}</h1>
-      <h1>{loggedInUser.email}</h1>
+      <h1>{loggedInUser?.name}</h1>
+      <h1>{loggedInUser?.email}</h1>
     </>
   );
 };
