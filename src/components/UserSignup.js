@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./UserSignupAndLogin.css";
 import axios from "axios";
+import { useAuth } from "../auth/AuthContext";
 
 const TOKEN_KEY = process.env.REACT_APP_TOKEN_HEADER_KEY;
 const API_BASE_URL = process.env.REACT_APP_API_URL;
@@ -18,7 +19,9 @@ const UserSignup = () => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState(valuesReset);
 
-  if (error) console.log(error);
+  const navigate = useNavigate();
+
+  const { setLoggedInUser } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,10 +49,11 @@ const UserSignup = () => {
       } else {
         setError(data.error);
       }
-
     } else {
       localStorage.setItem(TOKEN_KEY, data.token);
       setNewUser(valuesReset);
+      setLoggedInUser(data.user);
+      navigate("/");
     }
   };
 

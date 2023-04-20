@@ -1,4 +1,22 @@
 .app-header {
   position: fixed;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2rem;
   width: 100%;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: .125rem solid black;
+  background-color: #222328;
+}
+
+.app-header a {
+  color: #fff !important;
+  text-decoration: none;
+}
+
+.main-content {
+  padding-top: 8rem;
+  overflow: hidden;
 }
