@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../auth/api";
 import { Link } from "react-router-dom";
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
@@ -14,7 +15,7 @@ const Projects = () => {
         const token = localStorage.getItem(headerToken);
         if (token) {
 
-          const response = await axios.get(`${API_BASE_URL}/projects`, {
+          const response = await api.get(`${API_BASE_URL}/projects`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
