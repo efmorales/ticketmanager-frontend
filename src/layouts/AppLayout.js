@@ -5,12 +5,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import "./AppLayout.css";
 
 const AppLayout = () => {
-  const { loggedInUser, setLoggedInUser } = useAuth();
-
-  const logout = () => {
-    localStorage.removeItem(process.env.REACT_APP_TOKEN_HEADER_KEY);
-    setLoggedInUser(null);
-  };
+  const { loggedInUser, logout } = useAuth();
 
   return (
     <>
