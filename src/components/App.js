@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect } from "react";
 
 import {
   RouterProvider,
@@ -19,13 +19,11 @@ import UserProfile from "./UserProfile";
 import Error from "./Error";
 
 function App() {
-
   const { verifyToken } = useAuth();
-
 
   useEffect(() => {
     verifyToken();
-  }, [])
+  }, []);
 
   const router = createBrowserRouter(
     createRoutesFromElements(
