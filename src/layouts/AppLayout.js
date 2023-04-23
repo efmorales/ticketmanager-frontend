@@ -7,7 +7,7 @@ import "./AppLayout.css";
 const AppLayout = () => {
   const { loggedInUser, setLoggedInUser } = useAuth();
 
-  const handleLogout = () => {
+  const logout = () => {
     localStorage.removeItem(process.env.REACT_APP_TOKEN_HEADER_KEY);
     setLoggedInUser(null);
   };
@@ -18,7 +18,7 @@ const AppLayout = () => {
         <NavLink to="/">Home</NavLink>
         {loggedInUser ? (
           <>
-            <NavLink to="/" onClick={handleLogout}>
+            <NavLink to="/" onClick={logout}>
               Logout
             </NavLink>
             <NavLink to="/profile">
