@@ -5,33 +5,64 @@ import { useAuth } from "../auth/AuthContext";
 const UserProfile = () => {
   const { loggedInUser } = useAuth();
 
-  const [userInfo, setUserInfo] = useState({
+  const userInfoReset = {
     name: loggedInUser.name,
-    editable: false,
+    email: loggedInUser.email,
+    bio: loggedInUser.bio,
+  };
+
+  const [userInfo, setUserInfo] = useState(userInfoReset);
+
+  const [changesMade, setChangesMade] = useState(false);
+
+  const [editField, setEditField] = useState({
+    name: false,
+    email: false,
+    bio: false,
   });
+
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    setEditField((prev) => ({ ...prev, [name]: false }));
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setUserInfo((prev) => ({
       ...prev,
       [name]: value,
     }));
+    
+    if (userInfo[name] !== loggedInUser[name]) {
+      setChangesMade(true);
+    }
   };
 
-  const userName = (
-    <input
-      className="field-value-editable"
-      type="text"
-      name="name"
-      id="name"
-      value={userInfo.name}
-      onChange={handleChange}
-      onBlur={() => setUserInfo((prev) => ({ ...prev, editable: false }))}
-      autoFocus
-      onFocus={(e) => e.target.select()}
-    />
-  );
+  const discardChanges = () => {
+    setUserInfo(userInfoReset);
+    setChangesMade(false);
+  }
+
+  const submitChanges = () => {
+    console.log("Changes Submitted!");
+  }
+
+
+  const editableField = (fieldName) => {
+    return (
+      <input
+        className="field-value-editable"
+        type="text"
+        name={fieldName}
+        id={fieldName}
+        value={userInfo[fieldName]}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        autoFocus
+        onFocus={(e) => e.target.select()}
+      />
+    );
+  };
 
   const profileCard = (
     <>
@@ -39,19 +70,50 @@ const UserProfile = () => {
         <span className="field-name">Name:</span>
         <span
           className="field-value"
-          onClick={() => setUserInfo((prev) => ({ ...prev, editable: true }))}
+          onClick={() =>
+            setEditField((prev) => ({
+              ...prev,
+              name: true,
+            }))
+          }
         >
-          {userInfo.editable ? userName : userInfo?.name}
+          {editField.name ? editableField("name") : userInfo?.name}
         </span>
       </p>
       <p className="field">
         <span className="field-name">Email: </span>
-        <span className="field-value">{loggedInUser?.email}</span>
+        <span
+          className="field-value"
+          onClick={() =>
+            setEditField((prev) => ({
+              ...prev,
+              email: true,
+            }))
+          }
+        >
+          {editField.email ? editableField("email") : userInfo?.email}
+        </span>
       </p>
       <p className="field">
         <span className="field-name">Bio: </span>
-        <span className="field-value">{loggedInUser?.bio}</span>
+        <span
+          className="field-value"
+          onClick={() =>
+            setEditField((prev) => ({
+              ...prev,
+              bio: true,
+            }))
+          }
+        >
+          {editField.bio ? editableField("bio") : userInfo?.bio}
+        </span>
       </p>
+      {changesMade && (
+        <>
+          <button onClick={submitChanges}>Save</button>
+          <button onClick={discardChanges}>Discard</button>
+        </>
+      )}
     </>
   );
 
