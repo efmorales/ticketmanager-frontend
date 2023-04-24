@@ -15,6 +15,7 @@ import UserProfile from "./UserProfile";
 import Projects from "./Projects";
 import Error from "./Error";
 import CreateProject from "./CreateProject";
+import ProjectDetails from "./ProjectDetails";
 
 function App() {
   const router = createBrowserRouter(
@@ -26,6 +27,7 @@ function App() {
         <Route path="profile" element={<UserProfile />} />
         <Route path="projects" element={<Projects />} />
         <Route path="projects/new" element={<CreateProject />} />
+        <Route path="projects/:projectId" element={<ProjectDetails />} />
         <Route path="*" element={<Error />} />
       </Route>
     )
