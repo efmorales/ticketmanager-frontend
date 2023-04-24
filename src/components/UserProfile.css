@@ -1,0 +1,43 @@
+.profile-card {
+  margin: auto;
+  width: 40%;
+  max-width: 800px;
+}
+
+.profile-card > p {
+  margin: 1.5em 0;
+}
+
+.profile-card > p > span {
+  display: flex;
+  min-width: 90%;
+}
+
+.field-name {
+  font-weight: bolder;
+  color: rgb(81, 133, 255);
+}
+
+.field-value {
+  padding: 0em 0em;
+  border-bottom: 2px solid rgba(255, 255, 255, 0);
+}
+
+.field-value:hover {
+  border-bottom: 2px solid rgb(81, 133, 255);
+}
+
+.field-value-editable {
+  color: #fff;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  background-color: #222328;
+  border: none;
+  border-bottom: 2px solid rgb(81, 133, 255);
+  outline: none;
+}
+
+.field-value-editable:focus:hover {
+  border-bottom: 2px solid rgb(81, 133, 255);
+}
