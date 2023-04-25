@@ -14,17 +14,27 @@
 }
 
 .field-name {
-  font-weight: bolder;
+  font-size: small;
+  font-weight: 600;
+  padding: 0 .8em;
   color: rgb(81, 133, 255);
 }
 
-.field-value {
-  padding: 0em 0em;
-  border-bottom: 2px solid rgba(255, 255, 255, 0);
+.field-value:hover {
+  background-color: #393b43;
 }
 
-.field-value:hover {
-  border-bottom: 2px solid rgb(81, 133, 255);
+.field-value-text {
+  margin: .25em .2em;
+  padding: 0 .5em;
+  border-radius: 3px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0);
+
+}
+
+.field-value-placeholder {
+  font-weight:400;
+  color: rgb(128, 128, 128)
 }
 
 .field-value-editable {
@@ -32,12 +42,26 @@
   width: 100%;
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
+  padding: .15em .5em;
   background-color: #222328;
-  border: none;
-  border-bottom: 2px solid rgb(81, 133, 255);
+  border: 2px solid rgb(81, 133, 255);
+  border-radius: 3px;
   outline: none;
 }
 
-.field-value-editable:focus:hover {
-  border-bottom: 2px solid rgb(81, 133, 255);
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  /* font-weight:400; */
+  padding: .3em 1em;
+  border: 2px solid rgb(184, 184, 184);
+  border-radius: 5px;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0);
 }
