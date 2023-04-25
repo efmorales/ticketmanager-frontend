@@ -6,27 +6,6 @@ import { useAuth } from "../auth/AuthContext";
 
 import axios from "axios";
 
-export const loader = async () => {
-  const localToken = localStorage.getItem(
-    process.env.REACT_APP_TOKEN_HEADER_KEY
-  );
-
-  if (localToken) {
-    try {
-      const { data } = await axios.get(
-        process.env.REACT_APP_API_URL + "/users/verify-user",
-        {
-          headers: { token: localToken },
-        }
-      );
-
-      return data.user;
-    } catch (error) {
-      return console.log(error);
-    }
-  }
-};
-
 const UserProfile = () => {
   const userData = useLoaderData();
 
@@ -126,9 +105,7 @@ const UserProfile = () => {
           ) : (
             <span className="field-value-text">
               {userInfo?.name || (
-                <span className="field-value-placeholder">
-                  Your name here
-                </span>
+                <span className="field-value-placeholder">Your name here</span>
               )}
             </span>
           )}
@@ -194,13 +171,23 @@ const UserProfile = () => {
 
 export default UserProfile;
 
-/* TODO 
+export const loader = async () => {
+  const localToken = localStorage.getItem(
+    process.env.REACT_APP_TOKEN_HEADER_KEY
+  );
 
-Known Bugs: 
-  - Occasionally/rarely, changes to user's info will not be saved correctly. Changes will appear to have been saved, but if you navigate to home page and navigate back to profile, the "saved" changes will have been discarded. When console logging the axios request, nothing comes back from server, as if the request was never made. 
+  if (localToken) {
+    try {
+      const { data } = await axios.get(
+        process.env.REACT_APP_API_URL + "/users/verify-user",
+        {
+          headers: { token: localToken },
+        }
+      );
 
-  - Set up error handler for when email changed is already registered. When changed to an already registered email, it appears to save, but when page is reloaded it reverts back to previous email.
-
-  - The first time I tried saving an empty field for bio, it did not save.
-
-*/
+      return data.user;
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+};
