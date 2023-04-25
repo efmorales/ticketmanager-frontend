@@ -5,12 +5,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import "./AppLayout.css";
 
 const AppLayout = () => {
-  const { loggedInUser, setLoggedInUser } = useAuth();
-
-  const handleLogout = () => {
-    localStorage.removeItem(process.env.REACT_APP_TOKEN_HEADER_KEY);
-    setLoggedInUser(null);
-  };
+  const { loggedInUser, logout } = useAuth();
 
   return (
     <>
@@ -18,7 +13,7 @@ const AppLayout = () => {
         <NavLink to="/">Home</NavLink>
         {loggedInUser ? (
           <>
-            <NavLink to="/" onClick={handleLogout}>
+            <NavLink to="/" onClick={logout}>
               Logout
             </NavLink>
             <NavLink to="/profile">

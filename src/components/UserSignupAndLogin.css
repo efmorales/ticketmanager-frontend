@@ -5,6 +5,7 @@
 }
 
 .title {
+    text-align: center;
     font-family: 'Bebas Neue', cursive;
     font-size: 3.75rem;
     margin: 0 auto 4rem;
