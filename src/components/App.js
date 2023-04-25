@@ -15,7 +15,7 @@ import AppLayout from "../layouts/AppLayout";
 import Home from "./Home";
 import UserSignup from "./UserSignup";
 import UserLogin from "./UserLogin";
-import UserProfile from "./UserProfile";
+import UserProfile, { loader as userProfileLoader } from "./UserProfile";
 import Error from "./Error";
 
 function App() {
@@ -23,15 +23,20 @@ function App() {
 
   useEffect(() => {
     verifyToken();
+    // eslint-disable-next-line
   }, []);
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route element={<AppLayout />}>
+      <Route element={<AppLayout />} errorElement={<Error />}>
         <Route index element={<Home />} />
         <Route path="login" element={<UserLogin />} />
         <Route path="signup" element={<UserSignup />} />
-        <Route path="profile" element={<UserProfile />} />
+        <Route
+          path="profile"
+          element={<UserProfile />}
+          loader={userProfileLoader}
+        />
         <Route path="*" element={<Error />} />
       </Route>
     )
