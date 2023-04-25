@@ -4,6 +4,7 @@
 
 ### To Do:
 - Password change functionality
+- Refine CSS styling
 
 ### Known Bugs:
   - Occasionally/rarely, changes to user's info will not be saved correctly. Changes will appear to have been saved, but if you navigate to home page and navigate back to profile, the "saved" changes will have been discarded. When console logging the axios request, nothing comes back from server, as if the request was never made. 
