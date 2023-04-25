@@ -1,28 +1,54 @@
 import { useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import "./UserProfile.css";
+import { FaRegUserCircle } from "react-icons/fa";
 import { useAuth } from "../auth/AuthContext";
 
+import axios from "axios";
+
+export const loader = async () => {
+  const localToken = localStorage.getItem(
+    process.env.REACT_APP_TOKEN_HEADER_KEY
+  );
+
+  if (localToken) {
+    try {
+      const { data } = await axios.get(
+        process.env.REACT_APP_API_URL + "/users/verify-user",
+        {
+          headers: { token: localToken },
+        }
+      );
+
+      return data.user;
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+};
+
 const UserProfile = () => {
-  const { loggedInUser } = useAuth();
+  const userData = useLoaderData();
 
   const userInfoReset = {
-    name: loggedInUser.name,
-    email: loggedInUser.email,
-    bio: loggedInUser.bio,
+    name: userData.name,
+    email: userData.email,
+    bio: userData.bio,
   };
 
   const [userInfo, setUserInfo] = useState(userInfoReset);
-
   const [changesMade, setChangesMade] = useState(false);
-
   const [editField, setEditField] = useState({
     name: false,
     email: false,
     bio: false,
   });
 
+  const { setLoggedInUser } = useAuth();
+
   const handleBlur = (e) => {
     const { name } = e.target;
+
     setEditField((prev) => ({ ...prev, [name]: false }));
   };
 
@@ -32,21 +58,36 @@ const UserProfile = () => {
       ...prev,
       [name]: value,
     }));
-    
-    if (userInfo[name] !== loggedInUser[name]) {
-      setChangesMade(true);
-    }
+
+    setChangesMade(true);
   };
 
   const discardChanges = () => {
     setUserInfo(userInfoReset);
     setChangesMade(false);
-  }
+  };
 
-  const submitChanges = () => {
-    console.log("Changes Submitted!");
-  }
+  const submitChanges = async () => {
+    try {
+      const { data } = await axios.put(
+        process.env.REACT_APP_API_URL + "/users/user",
+        {
+          id: userData._id,
+          updates: userInfo,
+        }
+      );
 
+      if (data.error) {
+        throw Error(JSON.stringify(data.error));
+      }
+
+      console.log("updated User: " + JSON.stringify(data.updatedUser));
+      setLoggedInUser(data.updatedUser);
+      setChangesMade(false);
+    } catch (error) {
+      console.log("Error: " + error);
+    }
+  };
 
   const editableField = (fieldName) => {
     return (
@@ -60,12 +101,15 @@ const UserProfile = () => {
         onBlur={handleBlur}
         autoFocus
         onFocus={(e) => e.target.select()}
+        placeholder="Your text here..."
+        autoComplete="off"
       />
     );
   };
 
   const profileCard = (
     <>
+      <FaRegUserCircle size={50} />
       <p className="field">
         <span className="field-name">Name:</span>
         <span
@@ -77,7 +121,17 @@ const UserProfile = () => {
             }))
           }
         >
-          {editField.name ? editableField("name") : userInfo?.name}
+          {editField.name ? (
+            editableField("name")
+          ) : (
+            <span className="field-value-text">
+              {userInfo?.name || (
+                <span className="field-value-placeholder">
+                  Your name here
+                </span>
+              )}
+            </span>
+          )}
         </span>
       </p>
       <p className="field">
@@ -91,7 +145,11 @@ const UserProfile = () => {
             }))
           }
         >
-          {editField.email ? editableField("email") : userInfo?.email}
+          {editField.email ? (
+            editableField("email")
+          ) : (
+            <span className="field-value-text">{userInfo?.email}</span>
+          )}
         </span>
       </p>
       <p className="field">
@@ -105,14 +163,28 @@ const UserProfile = () => {
             }))
           }
         >
-          {editField.bio ? editableField("bio") : userInfo?.bio}
+          {editField.bio ? (
+            editableField("bio")
+          ) : (
+            <span className="field-value-text">
+              {userInfo?.bio || (
+                <span className="field-value-placeholder">
+                  A bit about yourself
+                </span>
+              )}
+            </span>
+          )}
         </span>
       </p>
       {changesMade && (
-        <>
-          <button onClick={submitChanges}>Save</button>
-          <button onClick={discardChanges}>Discard</button>
-        </>
+        <div className="btn-container">
+          <button className="btn save" onClick={submitChanges}>
+            Save
+          </button>
+          <button className="btn discard" onClick={discardChanges}>
+            Discard
+          </button>
+        </div>
       )}
     </>
   );
@@ -121,3 +193,14 @@ const UserProfile = () => {
 };
 
 export default UserProfile;
+
+/* TODO 
+
+Known Bugs: 
+  - Occasionally/rarely, changes to user's info will not be saved correctly. Changes will appear to have been saved, but if you navigate to home page and navigate back to profile, the "saved" changes will have been discarded. When console logging the axios request, nothing comes back from server, as if the request was never made. 
+
+  - Set up error handler for when email changed is already registered. When changed to an already registered email, it appears to save, but when page is reloaded it reverts back to previous email.
+
+  - The first time I tried saving an empty field for bio, it did not save.
+
+*/
