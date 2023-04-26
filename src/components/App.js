@@ -22,6 +22,8 @@ import CreateProject from "./CreateProject";
 import ProjectDetails from "./ProjectDetails";
 import TicketDetails from "./TicketDetails";
 import CreateTicket from "./CreateTicket";
+import OrganizationLayout from "../layouts/OrganizationLayout";
+import Organization from "./Organization";
 
 
 
@@ -49,6 +51,10 @@ function App() {
         <Route path="projects/:projectId" element={<ProjectDetails />} />
         <Route path="tickets/:ticketId" element={<TicketDetails />} />
         <Route path="/projects/:projectId/create-ticket" element={<CreateTicket />} />
+
+        <Route path="organization" element={<OrganizationLayout />} >
+          <Route index element={<Organization />} />
+        </Route>
 
 
        
