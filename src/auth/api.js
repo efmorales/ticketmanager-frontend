@@ -13,11 +13,11 @@ const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem(TOKEN_KEY);
-  console.log("Token from localStorage:", token);
+//   console.log("Token from localStorage:", token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
-  console.log("Request config:", config);
+//   console.log("Request config:", config);
   return config;
 });
 
