@@ -9,8 +9,12 @@ const TicketDetails = () => {
     const [ticket, setTicket] = useState(null);
     const [editing, setEditing] = useState({ title: false, description: false, priority: false, status: false });
     const [editedData, setEditedData] = useState({ title: "", description: "", priority: "low", status: "open" });
+    const [projectMembers, setProjectMembers] = useState([]);
+
 
     useEffect(() => {
+
+
         const fetchTicket = async () => {
             try {
                 const { data } = await api.get(`/tickets/${ticketId}`, {
@@ -19,7 +23,6 @@ const TicketDetails = () => {
                     },
                 });
 
-                console.log("Response data:", data);
 
                 setTicket(data.ticket);
                 setEditedData({
@@ -36,6 +39,25 @@ const TicketDetails = () => {
         fetchTicket();
         // console.log(ticket);
     }, [ticketId]);
+
+    useEffect(() => {
+        const fetchProjectMembers = async () => {
+            try {
+                const { data } = await api.get(`/projects/${ticket.projectId}/members`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+                    },
+                });
+                setProjectMembers(data.members);
+            } catch (error) {
+                console.error("Failed to fetch project members:", error);
+            }
+        };
+
+        if (ticket) {
+            fetchProjectMembers();
+        }
+    }, [ticket]);
 
     const handleEdit = (field) => {
         setEditing({ ...editing, [field]: true });
@@ -139,6 +161,31 @@ const TicketDetails = () => {
                     <h3>Description</h3>
                     <p>{ticket.description}</p>
                     <button onClick={() => handleEdit("description")}>Edit</button>
+                </>
+            )}
+
+            {editing.assignedTo ? (
+                <>
+                    <select
+                        name="assignedTo"
+                        value={editedData.assignedTo}
+                        onChange={(e) => setEditedData({ ...editedData, assignedTo: e.target.value })}
+                    >
+                        {projectMembers.map((member) => (
+                            <option key={member._id} value={member._id}>
+                                {member.name}
+                            </option>
+                        ))}
+                    </select>
+                    <button onClick={() => handleSave("assignedTo")}>Save</button>
+                    <button onClick={() => handleCancel("assignedTo")}>Cancel</button>
+                </>
+            ) : (
+                <>
+                    <h3>
+                        Assigned To: {ticket.assignedTo.length > 0 ? ticket.assignedTo[0].name : "Not assigned"}
+                    </h3>
+                    <button onClick={() => handleEdit("assignedTo")}>Edit</button>
                 </>
             )}
         </div>
