@@ -13,6 +13,8 @@ const AppLayout = () => {
         <NavLink to="/">Home</NavLink>
         {loggedInUser ? (
           <>
+            <NavLink to="/projects">Projects</NavLink>
+            <NavLink to="/organization">Organizations</NavLink>
             <NavLink to="/" onClick={logout}>
               Logout
             </NavLink>
