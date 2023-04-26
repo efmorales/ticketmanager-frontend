@@ -11,18 +11,22 @@ const TicketDetails = () => {
   useEffect(() => {
     const fetchTicket = async () => {
       try {
-        const { data } = await api.get(`/tickets/${ticketId}`, {
+        const {data} = await api.get(`/tickets/${ticketId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
           },
         });
-        setTicket(data);
+
+      console.log("Response data:", data);
+
+        setTicket(data.ticket);
       } catch (error) {
         console.error("Failed to fetch ticket:", error);
       }
     };
 
     fetchTicket();
+    // console.log(ticket);
   }, [ticketId]);
 
   if (!ticket) {

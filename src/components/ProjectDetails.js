@@ -140,6 +140,7 @@ const ProjectDetails = () => {
                     </li>
                 ))}
             </ul>
+            <Link to={`/projects/${projectId}/create-ticket`}>Create a new ticket</Link>
         </div>
     );
 };

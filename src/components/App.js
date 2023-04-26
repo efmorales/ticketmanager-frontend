@@ -21,6 +21,8 @@ import Error from "./Error";
 import CreateProject from "./CreateProject";
 import ProjectDetails from "./ProjectDetails";
 import TicketDetails from "./TicketDetails";
+import CreateTicket from "./CreateTicket";
+
 
 
 function App() {
@@ -41,6 +43,8 @@ function App() {
         <Route path="projects/new" element={<CreateProject />} />
         <Route path="projects/:projectId" element={<ProjectDetails />} />
         <Route path="tickets/:ticketId" element={<TicketDetails />} />
+        <Route path="/projects/:projectId/create-ticket" element={<CreateTicket />} />
+
 
         <Route path="*" element={<Error />} />
       </Route>
