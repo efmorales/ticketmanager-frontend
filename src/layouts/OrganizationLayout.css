@@ -1,0 +1,24 @@
+.organization-page {
+  display: flex;
+}
+
+.organization-nav {
+  padding: 0;
+  color: #fff;
+  border-right: 1px solid #fff;
+}
+
+.organization-nav ul {
+  display: flex;
+  flex-direction: column;
+  padding: 0 0;
+}
+
+.organization-nav ul li {
+  list-style: none;
+  padding: .5em 5em
+}
+
+.organization-content {
+  padding: 1em 5em;
+}
