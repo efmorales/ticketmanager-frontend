@@ -15,23 +15,23 @@ const UserLayout = () => {
     <div className="organization-page">
       <nav className="organization-nav">
         <div className="profile-link" onClick={handleClick}>
-          <NavLink to="profile">
+          <NavLink to=".">
             <FaRegUserCircle size={40} />
             <div>
               {loggedInUser?.name}
               <br />
-              <span className="display-type">Personal</span>
+              <span className="display-type">Personal Projects</span>
             </div>
           </NavLink>
         </div>
         <ul>
-          <li onClick={handleClick}>
+          <li><NavLink to="organizations">Organizations</NavLink></li>
+          <li>
             <NavLink to="projects">Projects</NavLink>
           </li>
-          <li onClick={handleClick}>Organizations</li>
-          <li onClick={handleClick}>Link 3</li>
-          <li onClick={handleClick}>Link 4</li>
-          <li onClick={handleClick}>Link 5</li>
+          <li><NavLink to="#">Link 3</NavLink></li>
+          <li><NavLink to="#">Link 4</NavLink></li>
+          <li><NavLink to="#">Link 5</NavLink></li>
         </ul>
       </nav>
       <section className="organization-content">
