@@ -13,7 +13,7 @@ const OrganizationLayout = () => {
     <div className="organization-page">
       <nav className="organization-nav">
         <div className="profile-link" onClick={handleClick}>
-          <NavLink to="/organization/profile">
+          <NavLink to="/organization">
             <FaRegUserCircle size={40} />
             <div>
               Organization Name
@@ -23,11 +23,21 @@ const OrganizationLayout = () => {
           </NavLink>
         </div>
         <ul>
-          <li onClick={handleClick}>Projects</li>
-          <li onClick={handleClick}>Members</li>
-          <li onClick={handleClick}>Link 3</li>
-          <li onClick={handleClick}>Link 4</li>
-          <li onClick={handleClick}>Link 5</li>
+          <li onClick={handleClick}>
+            <NavLink to="projects">Projects</NavLink>
+          </li>
+          <li onClick={handleClick}>
+            <NavLink to="members">Members</NavLink>
+          </li>
+          <li>
+            <NavLink to="#">Link 3</NavLink>
+          </li>
+          <li>
+            <NavLink to="#">Link 4</NavLink>
+          </li>
+          <li>
+            <NavLink to="#">Link 5</NavLink>
+          </li>
         </ul>
       </nav>
       <section className="organization-content">
