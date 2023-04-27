@@ -22,10 +22,9 @@ import CreateProject from "./CreateProject";
 import ProjectDetails from "./ProjectDetails";
 import TicketDetails from "./TicketDetails";
 import CreateTicket from "./CreateTicket";
+import UserLayout from "../layouts/UserLayout";
 import OrganizationLayout from "../layouts/OrganizationLayout";
-import Organization from "./Organization";
-
-
+import Organization from "./organization/Organization";
 
 function App() {
   const { verifyToken } = useAuth();
@@ -41,23 +40,27 @@ function App() {
         <Route index element={<Home />} />
         <Route path="login" element={<UserLogin />} />
         <Route path="signup" element={<UserSignup />} />
-        <Route
-          path="profile"
-          element={<UserProfile />}
-          loader={userProfileLoader}
-        />
-        <Route path="projects" element={<Projects />} />
-        <Route path="projects/new" element={<CreateProject />} />
-        <Route path="projects/:projectId" element={<ProjectDetails />} />
-        <Route path="tickets/:ticketId" element={<TicketDetails />} />
-        <Route path="/projects/:projectId/create-ticket" element={<CreateTicket />} />
+        <Route path="user" element={<UserLayout />}>
+          <Route index path="projects" element={<Projects />} />
+          <Route path="projects/new" element={<CreateProject />} />
+          <Route path="projects/:projectId" element={<ProjectDetails />} />
+          <Route path="tickets/:ticketId" element={<TicketDetails />} />
+          <Route
+            path="projects/:projectId/create-ticket"
+            element={<CreateTicket />}
+            />
+          <Route />
+          <Route
+            path="profile"
+            element={<UserProfile />}
+            loader={userProfileLoader}
+          />
+        </Route>
 
-        <Route path="organization" element={<OrganizationLayout />} >
+        <Route path="organization" element={<OrganizationLayout />}>
           <Route index element={<Organization />} />
         </Route>
 
-
-       
         <Route path="*" element={<Error />} />
       </Route>
     )
