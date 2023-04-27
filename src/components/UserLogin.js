@@ -43,7 +43,7 @@ const UserSignup = () => {
       localStorage.setItem(TOKEN_KEY, data.token);
       setUser(valuesReset);
       setLoggedInUser(data.user);
-      navigate("/");
+      navigate("/user");
     }
   };
 

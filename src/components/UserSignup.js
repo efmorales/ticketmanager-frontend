@@ -53,7 +53,7 @@ const UserSignup = () => {
       localStorage.setItem(TOKEN_KEY, data.token);
       setNewUser(valuesReset);
       setLoggedInUser(data.user);
-      navigate("/");
+      navigate("/user");
     }
   };
 
