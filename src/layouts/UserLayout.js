@@ -25,7 +25,9 @@ const UserLayout = () => {
           </NavLink>
         </div>
         <ul>
-          <li onClick={handleClick}>Projects</li>
+          <li onClick={handleClick}>
+            <NavLink to="projects">Projects</NavLink>
+          </li>
           <li onClick={handleClick}>Organizations</li>
           <li onClick={handleClick}>Link 3</li>
           <li onClick={handleClick}>Link 4</li>
