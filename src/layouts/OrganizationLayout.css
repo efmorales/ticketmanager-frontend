@@ -2,6 +2,22 @@
   display: flex;
 }
 
+.profile-link {
+  border-bottom: 1px solid rgb(164, 164, 164);
+  padding: .5em 0 1em;
+  margin: 0 1em 1em;
+}
+
+.profile-link a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+  color: white;
+  text-decoration: none;
+
+}
+
 .organization-nav {
   /* text-align: center; */
   padding: 0;
@@ -17,8 +33,15 @@
 
 .organization-nav ul li {
   list-style: none;
-  padding: .5em 2em;
   min-width: 15em;
+}
+
+.organization-nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  padding: .5em 2em;
 }
 
 .organization-nav ul li:hover {
@@ -29,22 +52,6 @@
 .organization-content {
   width: 100%;
   /* padding: 1em 5em; */
-}
-
-.profile-link {
-  border-bottom: 1px solid rgb(164, 164, 164);
-  padding: .5em 0 1em;
-  margin: 0 1em 1em;
-}
-
-.profile-link a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .5em;
-  color: white;
-  text-decoration: none;
-
 }
 
 .display-type {
