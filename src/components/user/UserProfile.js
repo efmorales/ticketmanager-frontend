@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import "./UserProfile.css";
 import { FaRegUserCircle } from "react-icons/fa";
-import { useAuth } from "../auth/AuthContext";
+import { useAuth } from "../../auth/AuthContext";
 
 import axios from "axios";
 

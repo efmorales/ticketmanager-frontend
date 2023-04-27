@@ -13,22 +13,26 @@ import "./App.css";
 
 import AppLayout from "../layouts/AppLayout";
 import Home from "./Home";
-import UserSignup from "./UserSignup";
-import UserLogin from "./UserLogin";
-import UserDashboard from "./UserDashboard";
-import UserProfile, { loader as userProfileLoader } from "./UserProfile";
+
+import UserSignup from "./user/UserSignup";
+import UserLogin from "./user/UserLogin";
+import UserDashboard from "./user/UserDashboard";
+import UserProfile, { loader as userProfileLoader } from "./user/UserProfile";
+import UserOrganizations from "./user/UserOrganizations";
+
+import OrganizationProfile from "./organization/OrganizationProfile";
+import OrganizationMembers from "./organization/OrganizationMembers";
+import OrganizationProjects from "./organization/OrganizationProjects";
+
 import Error from "./Error";
 import Projects from "./Projects";
 import CreateProject from "./CreateProject";
 import ProjectDetails from "./ProjectDetails";
 import TicketDetails from "./TicketDetails";
 import CreateTicket from "./CreateTicket";
+
 import UserLayout from "../layouts/UserLayout";
 import OrganizationLayout from "../layouts/OrganizationLayout";
-import OrganizationProfile from "./organization/OrganizationProfile";
-import OrganizationMembers from "./organization/OrganizationMembers";
-import OrganizationProjects from "./organization/OrganizationProjects";
-import UserOrganizations from "./UserOrganizations";
 
 function App() {
   const { verifyToken } = useAuth();
