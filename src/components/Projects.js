@@ -33,7 +33,7 @@ const Projects = () => {
   return (
     <div>
         {/* {After this line, create a Link to the route /projects/new}, the h3 should be names "Create a new project" */}
-        <Link to="user/projects/new"><h3>Create a new project</h3></Link>
+        <Link to="new"><h3>Create a new project</h3></Link>
       <h1>Your Projects</h1>
       <ul>
         {projects.map((project) => (

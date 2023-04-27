@@ -31,7 +31,8 @@ const CreateProject = () => {
                 }
             );
             // Redirect to the new project or the projects list page
-            navigate(`/projects/${response.data._id}`);
+            // navigate(`/projects/${response.data._id}`);
+            navigate(`../projects/${response.data._id}`);
             console.log("Project created:", response.data);
         } catch (err) {
             setError(err.message || "An error occurred while creating the project.");
