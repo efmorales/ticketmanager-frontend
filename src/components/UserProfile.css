@@ -1,7 +1,8 @@
 .profile-card {
   margin: auto;
-  width: 40%;
+  width: 100%;
   max-width: 800px;
+  padding: 1em 5em;
 }
 
 .profile-card > p {
