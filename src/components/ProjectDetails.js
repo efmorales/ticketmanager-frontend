@@ -134,13 +134,13 @@ const ProjectDetails = () => {
             <ul>
                 {tickets.map((ticket) => (
                     <li key={ticket._id}>
-                        <Link to={`/tickets/${ticket._id}`}>
+                        <Link to={`/user/tickets/${ticket._id}`}>
                             {ticket.title} - {ticket.status}
                         </Link>
                     </li>
                 ))}
             </ul>
-            <Link to={`/projects/${projectId}/create-ticket`}>Create a new ticket</Link>
+            <Link to={"create-ticket"}>Create a new ticket</Link>
         </div>
     );
 };

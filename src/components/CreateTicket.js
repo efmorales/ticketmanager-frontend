@@ -27,7 +27,7 @@ const CreateTicket = () => {
                     Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
                 },
             });
-            navigate(`/projects/${projectId}`);
+            navigate(`../projects/${projectId}`);
         } catch (error) {
             console.error("Failed to create ticket:", error);
         }

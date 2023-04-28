@@ -13,10 +13,12 @@ const AppLayout = () => {
         <NavLink to="/">Home</NavLink>
         {loggedInUser ? (
           <>
+            <NavLink to="/organization">Organizations</NavLink>
+            <NavLink to="/user">Personal</NavLink>
             <NavLink to="/" onClick={logout}>
               Logout
             </NavLink>
-            <NavLink to="/profile">
+            <NavLink to="user/profile">
               <FaRegUserCircle size={50} />
             </NavLink>
           </>
