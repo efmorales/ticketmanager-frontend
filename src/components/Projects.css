@@ -1,5 +1,6 @@
 .projects-container {
     margin-left: 1rem;
+    min-height: 100vh;
 }
 
 .new-project,

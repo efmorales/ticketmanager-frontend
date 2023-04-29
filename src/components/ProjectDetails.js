@@ -2,6 +2,9 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../auth/api";
 import { Link } from "react-router-dom";
+import { FaPlusCircle, FaEdit } from "react-icons/fa";
+import './ProjectDetails.css';
+
 
 
 const TOKEN_KEY = process.env.REACT_APP_TOKEN_HEADER_KEY;
@@ -88,9 +91,10 @@ const ProjectDetails = () => {
     }
 
     return (
-        <div>
+        <div className="project-details-container">
+
             {editing.name ? (
-                <>
+                <div className="title-edit">
                     <input
                         type="text"
                         value={editedData.name}
@@ -98,11 +102,49 @@ const ProjectDetails = () => {
                     />
                     <button onClick={() => handleSave("name")}>Save</button>
                     <button onClick={() => handleCancel("name")}>Cancel</button>
-                </>
+                </div>
+            ) : (
+                <div className="title-preview">
+                    <h1>{project.name}</h1>
+                    <FaEdit onClick={() => handleEdit("name")} size={30} className="edit-icon" />
+                </div>
+            )}
+
+            <Link to={"create-ticket"} className="new-ticket">
+
+                <h2>ADD NEW TICKET</h2>
+                <FaPlusCircle size={23} className="circle-icon" />
+
+            </Link>
+            <h3>Ticket Backlog</h3>
+            <ul>
+                {tickets.map((ticket) => (
+                    <li key={ticket._id}>
+                        <Link to={`/user/tickets/${ticket._id}`}>
+                            {ticket.title} - {ticket.status}
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+
+            {editing.description ? (
+                <div className="description-edit">
+                    <textarea
+                        value={editedData.description}
+                        onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
+                    ></textarea>
+                    <button onClick={() => handleSave("description")}>Save</button>
+                    <button onClick={() => handleCancel("description")}>Cancel</button>
+                </div>
             ) : (
                 <>
-                    <h1>{project.name}</h1>
-                    <button onClick={() => handleEdit("name")}>Edit</button>
+                    <div className="description-preview">
+                        <h3>Project description</h3>
+                        <FaEdit onClick={() => handleEdit("description")} size={20} className="edit-icon" />
+                    </div>
+                    <p>{project.description}</p>
+                    {/* <button onClick={() => handleEdit("description")}>Edit</button> */}
+
                 </>
             )}
 
@@ -113,34 +155,8 @@ const ProjectDetails = () => {
                 ))}
             </ul>
 
-            {editing.description ? (
-                <>
-                    <textarea
-                        value={editedData.description}
-                        onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
-                    ></textarea>
-                    <button onClick={() => handleSave("description")}>Save</button>
-                    <button onClick={() => handleCancel("description")}>Cancel</button>
-                </>
-            ) : (
-                <>
-                    <h3>Description</h3>
-                    <p>{project.description}</p>
-                    <button onClick={() => handleEdit("description")}>Edit</button>
-                </>
-            )}
 
-            <h3>Related Ticket Issues</h3>
-            <ul>
-                {tickets.map((ticket) => (
-                    <li key={ticket._id}>
-                        <Link to={`/user/tickets/${ticket._id}`}>
-                            {ticket.title} - {ticket.status}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
-            <Link to={"create-ticket"}>Create a new ticket</Link>
+
         </div>
     );
 };

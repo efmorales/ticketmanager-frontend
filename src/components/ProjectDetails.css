@@ -1,0 +1,104 @@
+.project-details-container {
+    margin-left: 1rem;
+    /* overflow: scroll; */
+    min-height: 100vh;
+}
+
+.project-details-container > h1 {
+    font-size: 1.5rem;
+    /* color: rgb(188, 186, 186); */
+}
+
+.project-details-container > h3 {
+    font-size: 1rem;
+    color: rgb(188, 186, 186);
+}
+
+.title-preview{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    gap: 1rem;
+}
+
+.title-preview > .edit-icon {
+    margin-top: 2.5rem;
+}
+
+.title-edit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding-top: 2rem;
+}
+
+.description-preview{
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: center; */
+    gap: 1rem;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.description-preview > .edit-icon {
+    margin-top: 2.3rem;
+    padding-top: 0;
+}
+
+.description-edit {
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: center; */
+    gap: 1rem;
+}
+
+.new-ticket,
+.new-ticket:link,
+.new-ticket:visited,
+.new-ticket:active,
+.project-details-container>ul>li>a,
+.project-details-container>ul>li>a:link,
+.project-details-container>ul>li>a:visited,
+.project-details-container>ul>li>a:active {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.new-ticket {
+    display: flex;
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.new-ticket > h2 {
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    padding-top: 1rem;
+}
+
+.new-ticket > .circle-icon {
+    margin-top: 1.5rem;
+}
+
+.project-details-container>ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.project-details-container>ul>li {
+    position: relative;
+    padding-left: 1.2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.project-details-container>ul>li::before {
+    content: "■";
+    position: absolute;
+    left: 0;
+    font-size: 1rem;
+    color: rgb(0, 255, 0);
+    
+}
