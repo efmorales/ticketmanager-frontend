@@ -1,12 +1,12 @@
 .app-header {
   position: fixed;
+  z-index: 2000;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 2rem;
   width: 100%;
   padding: 1rem 1.5rem;
-  margin-bottom: 2rem;
   border-bottom: .125rem solid black;
   background-color: #222328;
 }
@@ -17,6 +17,5 @@
 }
 
 .main-content {
-  padding-top: 8rem;
-  overflow: hidden;
+  padding-top: 4.3rem;
 }
