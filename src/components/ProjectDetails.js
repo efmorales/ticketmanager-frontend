@@ -109,7 +109,7 @@ const ProjectDetails = () => {
             <h3>Members</h3>
             <ul>
                 {memberData.map((member) => (
-                    <li key={member.id}>{member.name}</li>
+                    <li key={member._id}>{member.name}</li>
                 ))}
             </ul>
 
