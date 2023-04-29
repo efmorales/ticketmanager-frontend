@@ -1,11 +1,11 @@
 .organization-page {
-  /* display: flex; */
   position: relative;
   height: 100%;
-  /* padding: 2rem; */
 }
 
-.organization-page h1, h2, h3 {
+.organization-page h1,
+h2,
+h3 {
   margin: 0;
   padding-top: 2em;
 }
@@ -15,8 +15,6 @@
   z-index: 1000;
   padding: 0;
   color: #fff;
-  /* border-right: 1px solid #fff; */
-  display: none;
   background-color: #222328;
   height: 100%;
   width: 100%;
@@ -30,6 +28,10 @@
   left: .4em;
 }
 
+.side-nav-toggle:hover {
+  cursor: pointer;
+}
+
 .open {
   display: block;
 }
@@ -39,7 +41,6 @@
 }
 
 .profile-link {
-  /* display: inline-block; */
   border-bottom: 1px solid rgb(164, 164, 164);
   padding: 3em 5em 2em;
   margin: auto;
@@ -70,11 +71,9 @@
 
 .side-nav ul {
   text-align: center;
-  /* display: flex; */
   list-style-type: none;
   flex-direction: column;
   padding: 0;
-  /* margin: 0; */
 }
 
 .side-nav ul li {
@@ -87,16 +86,51 @@
   color: #fff;
   text-decoration: none;
   display: block;
-  /* width: 100%; */
   padding: .5em 1em;
 }
 
 .side-nav ul li a:hover {
   background-color: rgb(59, 59, 59);
-  /* border-right: .5em solid #fff; */
+  cursor: pointer;
 }
 
 .page-content {
   width: 100%;
-  /* padding: 1em 5em; */
+}
+
+@media (min-width: 800px) {
+  .organization-page {
+    display: flex;
+  }
+
+  .close {
+    display: block;
+  }
+
+  .side-nav-toggle {
+    display: none;
+  }
+
+  .side-nav {
+    position: unset;
+    width: 15em;
+    border-right: 1px solid #fff;
+    margin-top: 2em;
+  }
+
+  .profile-link {
+    padding: 1em;
+  }
+
+  .side-nav ul {
+    text-align: unset;
+  }
+
+  .side-nav ul li a {
+    padding-left: 3.5em;
+  }
+
+  .side-nav ul li a:hover {
+    border-right: .40em solid #fff;
+  }
 }
