@@ -1,40 +1,57 @@
+import { useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaRegUserCircle, FaBars, FaTimes } from "react-icons/fa";
 
-import "./OrganizationLayout.css";
+import "./UserAndOrganizationLayout.css";
 
 const UserLayout = () => {
+  const [openMenu, setOpenMenu] = useState(false);
+
   const { loggedInUser } = useAuth();
 
   const handleClick = (e) => {
-    console.log(`${e.target.innerText} clicked!`);
+    setOpenMenu(false);
   };
 
   return (
     <div className="organization-page">
-      <nav className="organization-nav">
+      <div className="side-nav-toggle" onClick={() => setOpenMenu(true)}>
+        <FaBars size={20} />
+      </div>
+      <nav className={`side-nav ${openMenu ? "open" : "close"}`}>
+        <div className="side-nav-toggle" onClick={() => setOpenMenu(false)}>
+          <FaTimes size={20} />
+        </div>
         <div className="profile-link" onClick={handleClick}>
           <NavLink to=".">
             <FaRegUserCircle size={40} />
             <div>
-              {loggedInUser?.name}
+              <span className="entity-name">{loggedInUser?.name}</span>
               <br />
-              <span className="display-type">Personal Projects</span>
+              <span className="display-type">Personal</span>
             </div>
           </NavLink>
         </div>
         <ul>
-          <li><NavLink to="organizations">Organizations</NavLink></li>
-          <li>
+          <li onClick={handleClick}>
+            <NavLink to="organizations">Organizations</NavLink>
+          </li>
+          <li onClick={handleClick}>
             <NavLink to="projects">Projects</NavLink>
           </li>
-          <li><NavLink to="#">Link 3</NavLink></li>
-          <li><NavLink to="#">Link 4</NavLink></li>
-          <li><NavLink to="#">Link 5</NavLink></li>
+          <li onClick={handleClick}>
+            <NavLink to="#">Link 3</NavLink>
+          </li>
+          <li onClick={handleClick}>
+            <NavLink to="#">Link 4</NavLink>
+          </li>
+          <li onClick={handleClick}>
+            <NavLink to="#">Link 5</NavLink>
+          </li>
         </ul>
       </nav>
-      <section className="organization-content">
+      <section className="page-content">
         <Outlet />
       </section>
     </div>

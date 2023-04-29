@@ -1,22 +1,34 @@
+import { useState } from "react";
 import { Outlet, NavLink } from "react-router-dom";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaRegUserCircle, FaBars, FaTimes } from "react-icons/fa";
 
-import "./OrganizationLayout.css";
+import "./UserAndOrganizationLayout.css";
 
 const OrganizationLayout = () => {
+  const [openMenu, setOpenMenu] = useState(false);
 
   const handleClick = (e) => {
-    console.log(`${e.target.innerText} clicked!`);
+    setOpenMenu(false);
   };
 
   return (
     <div className="organization-page">
-      <nav className="organization-nav">
+      <div className="side-nav-toggle" onClick={() => setOpenMenu(true)}>
+        <FaBars size={20} />
+      </div>
+      <nav className={`side-nav ${openMenu ? "open" : "close"}`}>
+        <div
+          className="side-nav-toggle"
+          href="#side-nav"
+          onClick={() => setOpenMenu(false)}
+        >
+          <FaTimes size={20} />
+        </div>
         <div className="profile-link" onClick={handleClick}>
           <NavLink to="/organization">
             <FaRegUserCircle size={40} />
             <div>
-              Organization Name
+              <span className="entity-name">Organization Name</span>
               <br />
               <span className="display-type">Organization</span>
             </div>
@@ -29,18 +41,18 @@ const OrganizationLayout = () => {
           <li onClick={handleClick}>
             <NavLink to="members">Members</NavLink>
           </li>
-          <li>
+          <li onClick={handleClick}>
             <NavLink to="#">Link 3</NavLink>
           </li>
-          <li>
+          <li onClick={handleClick}>
             <NavLink to="#">Link 4</NavLink>
           </li>
-          <li>
+          <li onClick={handleClick}>
             <NavLink to="#">Link 5</NavLink>
           </li>
         </ul>
       </nav>
-      <section className="organization-content">
+      <section className="page-content">
         <Outlet />
       </section>
     </div>
