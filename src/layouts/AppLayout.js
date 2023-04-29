@@ -19,7 +19,7 @@ const AppLayout = () => {
               Logout
             </NavLink>
             <NavLink to="user/profile">
-              <FaRegUserCircle size={50} />
+              <FaRegUserCircle size={30} />
             </NavLink>
           </>
         ) : (
