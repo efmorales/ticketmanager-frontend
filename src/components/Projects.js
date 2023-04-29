@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 // import axios from "axios";
 import api from "../auth/api";
 import { Link } from "react-router-dom";
+import { FaPlusCircle } from "react-icons/fa";
+import './Projects.css'
 
 const API_BASE_URL = process.env.REACT_APP_API_URL;
 const headerToken = process.env.REACT_APP_TOKEN_HEADER_KEY;
@@ -31,10 +33,12 @@ const Projects = () => {
   }, []);
 
   return (
-    <div>
-        {/* {After this line, create a Link to the route /projects/new}, the h3 should be names "Create a new project" */}
-        <Link to="new"><h3>Create a new project</h3></Link>
-      <h1>Your Projects</h1>
+    <div className="projects-container">
+        <Link to="new" className="new-project">
+            <h3>ADD NEW PROJECT</h3>
+            <FaPlusCircle size={30} className="circle-icon" />
+        </Link>
+      <h1>Projects</h1>
       <ul>
         {projects.map((project) => (
           <li key={project._id}>
