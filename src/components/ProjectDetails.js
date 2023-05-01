@@ -2,8 +2,10 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../auth/api";
 import { Link } from "react-router-dom";
-import { FaPlusCircle, FaEdit } from "react-icons/fa";
+import { FaPlusCircle, FaEdit, FaWindowClose } from "react-icons/fa";
+import TicketDetails from './TicketDetails';
 import './ProjectDetails.css';
+import './modal.css';
 
 
 
@@ -16,6 +18,9 @@ const ProjectDetails = () => {
     const [editedData, setEditedData] = useState({ name: "", description: "", members: [] });
     const [memberData, setMemberData] = useState([]);
     const [tickets, setTickets] = useState([]);
+    const [selectedTicket, setSelectedTicket] = useState(null);
+    const [showTicketDetails, setShowTicketDetails] = useState(false);
+
 
 
     useEffect(() => {
@@ -86,6 +91,29 @@ const ProjectDetails = () => {
         setEditing({ ...editing, [field]: false });
     };
 
+    const updateTicket = (updatedTicket) => {
+        setTickets((prevTickets) =>
+            prevTickets.map((ticket) => (ticket._id === updatedTicket._id ? updatedTicket : ticket))
+        );
+    };
+
+    const openTicketDetails = (ticket) => {
+        setSelectedTicket(ticket);
+        setShowTicketDetails(true);
+    };
+
+    const closeTicketDetails = () => {
+        setSelectedTicket(null);
+        setShowTicketDetails(false);
+    };
+
+    const handleClickOutside = (e) => {
+        if (e.target.classList.contains("modal-overlay")) {
+            closeTicketDetails();
+        }
+    };
+
+
     if (!project) {
         return <div>Loading...</div>;
     }
@@ -120,12 +148,21 @@ const ProjectDetails = () => {
             <ul>
                 {tickets.map((ticket) => (
                     <li key={ticket._id}>
-                        <Link to={`/user/tickets/${ticket._id}`}>
+                        <button onClick={() => openTicketDetails(ticket)}>
                             {ticket.title} - {ticket.status}
-                        </Link>
+                        </button>
                     </li>
                 ))}
             </ul>
+
+            {showTicketDetails && (
+                <div className="modal-overlay" onClick={handleClickOutside}>
+                    <div className="modal">
+                        <FaWindowClose onClick={closeTicketDetails} size={30} className="close-icon" />
+                        <TicketDetails ticket={selectedTicket} onUpdateTicket={updateTicket} />
+                    </div>
+                </div>
+            )}
 
             {editing.description ? (
                 <div className="description-edit">

@@ -1,0 +1,7 @@
+.ticket-details-container{
+    overflow: scroll;
+}
+
+.ticket-details-container > h1 {
+    padding-top: 0rem;
+}

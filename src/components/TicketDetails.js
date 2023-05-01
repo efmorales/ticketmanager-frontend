@@ -1,44 +1,17 @@
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../auth/api";
+import { FaEdit } from "react-icons/fa";
+import './TicketDetails.css';
 
 const TOKEN_KEY = process.env.REACT_APP_TOKEN_HEADER_KEY;
 
-const TicketDetails = () => {
-    const { ticketId } = useParams();
-    const [ticket, setTicket] = useState(null);
+const TicketDetails = (props) => {
+    const { ticket, onUpdateTicket } = props
     const [editing, setEditing] = useState({ title: false, description: false, priority: false, status: false });
     const [editedData, setEditedData] = useState({ title: "", description: "", priority: "low", status: "open" });
     const [projectMembers, setProjectMembers] = useState([]);
 
-
-    useEffect(() => {
-
-
-        const fetchTicket = async () => {
-            try {
-                const { data } = await api.get(`/tickets/${ticketId}`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-                    },
-                });
-
-
-                setTicket(data.ticket);
-                setEditedData({
-                    title: data.ticket.title,
-                    description: data.ticket.description,
-                    priority: data.ticket.priority
-                });
-
-            } catch (error) {
-                console.error("Failed to fetch ticket:", error);
-            }
-        };
-
-        fetchTicket();
-        // console.log(ticket);
-    }, [ticketId]);
 
     useEffect(() => {
         const fetchProjectMembers = async () => {
@@ -65,12 +38,12 @@ const TicketDetails = () => {
 
     const handleSave = async (field) => {
         try {
-            const { data } = await api.put(`/tickets/${ticketId}`, { [field]: editedData[field] }, {
+            const { data } = await api.put(`/tickets/${ticket._id}`, { [field]: editedData[field] }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
                 },
             });
-            setTicket(data.ticket);
+            onUpdateTicket(data.ticket);
             setEditing({ ...editing, [field]: false });
         } catch (error) {
             console.error("Failed to update ticket:", error);
@@ -88,7 +61,7 @@ const TicketDetails = () => {
     }
 
     return (
-        <div>
+        <div className="ticket-details-container">
             {editing.title ? (
                 <>
                     <input
@@ -100,10 +73,10 @@ const TicketDetails = () => {
                     <button onClick={() => handleCancel("title")}>Cancel</button>
                 </>
             ) : (
-                <>
+                <div className="ticket-title-preview">
                     <h1>{ticket.title}</h1>
-                    <button onClick={() => handleEdit("title")}>Edit</button>
-                </>
+                    < FaEdit onClick={() => handleEdit("title")} size={30} />
+                </div>
             )}
 
             {editing.status ? (
