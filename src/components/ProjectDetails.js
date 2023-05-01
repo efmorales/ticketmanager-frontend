@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../auth/api";
-import { Link } from "react-router-dom";
 import { FaPlusCircle, FaEdit, FaWindowClose } from "react-icons/fa";
 import TicketDetails from './TicketDetails';
 import './ProjectDetails.css';
@@ -20,22 +19,28 @@ const ProjectDetails = () => {
     const [tickets, setTickets] = useState([]);
     const [selectedTicket, setSelectedTicket] = useState(null);
     const [showTicketDetails, setShowTicketDetails] = useState(false);
+    const [isCreatingTicket, setIsCreatingTicket] = useState(false);
+    const [ticketData, setTicketData] = useState({
+        title: "",
+        description: "",
+    });
 
 
+    const fetchTickets = async () => {
+        try {
+            const response = await api.get(`/tickets/project/${projectId}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+                },
+            });
+            setTickets(response.data.tickets);
+        } catch (error) {
+            console.error("Error fetching tickets:", error);
+        }
+    };
 
     useEffect(() => {
-        const fetchTickets = async () => {
-            try {
-                const response = await api.get(`/tickets/project/${projectId}`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-                    },
-                });
-                setTickets(response.data.tickets);
-            } catch (error) {
-                console.error("Error fetching tickets:", error);
-            }
-        };
+
 
         const fetchProject = async () => {
             try {
@@ -88,6 +93,28 @@ const ProjectDetails = () => {
         }
     };
 
+    const handleChange = (e) => {
+        setTicketData({ ...ticketData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            await api.post("/tickets", { ...ticketData, projectId }, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+                },
+            });
+            setIsCreatingTicket(false);
+            fetchTickets();
+        } catch (error) {
+            console.error("Failed to create ticket:", error);
+        }
+    };
+
+
+
 
     const updateTicket = (updatedTicket) => {
         setTickets((prevTickets) =>
@@ -138,12 +165,24 @@ const ProjectDetails = () => {
                 </div>
             )}
 
-            <Link to={"create-ticket"} className="new-ticket">
+            {isCreatingTicket ? (
+                <>
+                    <input
+                        type="text"
+                        name="title"
+                        value={ticketData.title}
+                        onChange={handleChange}
+                        required
+                    />
+                    <button type="submit" onClick={handleSubmit}>Create Ticket</button>
+                </>
+            ) : (
+                <div className="new-ticket" onClick={() => setIsCreatingTicket(true)}>
+                    <h2>ADD NEW TICKET</h2>
+                    <FaPlusCircle size={23} className="circle-icon" />
+                </div>
+            )}
 
-                <h2>ADD NEW TICKET</h2>
-                <FaPlusCircle size={23} className="circle-icon" />
-
-            </Link>
             <h3>Ticket Backlog</h3>
             <ul>
                 {tickets.map((ticket) => (
