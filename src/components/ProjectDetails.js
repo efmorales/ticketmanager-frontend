@@ -72,24 +72,22 @@ const ProjectDetails = () => {
         setEditing({ ...editing, [field]: true });
     };
 
-    const handleSave = async (field) => {
+    const handleBlur = async (field, value) => {
+        setEditing({ ...editing, [field]: false });
+
         try {
-            const { data } = await api.put(`/projects/${projectId}`, { [field]: editedData[field] }, {
+            const { data } = await api.put(`/projects/${projectId}`, { [field]: value }, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
                 },
             });
             setProject(data);
-            setEditing({ ...editing, [field]: false });
+            setEditedData((prevData) => ({ ...prevData, [field]: value }));
         } catch (error) {
             console.error("Failed to update project:", error);
         }
     };
 
-    const handleCancel = (field) => {
-        setEditedData({ ...editedData, [field]: project[field] });
-        setEditing({ ...editing, [field]: false });
-    };
 
     const updateTicket = (updatedTicket) => {
         setTickets((prevTickets) =>
@@ -127,13 +125,15 @@ const ProjectDetails = () => {
                         type="text"
                         value={editedData.name}
                         onChange={(e) => setEditedData({ ...editedData, name: e.target.value })}
+                        onBlur={(e) => handleBlur("name", e.target.value)}
+                        autoFocus
+                        onFocus={(e) => e.target.select()}
                     />
-                    <button onClick={() => handleSave("name")}>Save</button>
-                    <button onClick={() => handleCancel("name")}>Cancel</button>
+
                 </div>
             ) : (
                 <div className="title-preview">
-                    <h1>{project.name}</h1>
+                    <h1>{editedData.name || project.name}</h1>
                     <FaEdit onClick={() => handleEdit("name")} size={30} className="edit-icon" />
                 </div>
             )}
@@ -148,7 +148,7 @@ const ProjectDetails = () => {
             <ul>
                 {tickets.map((ticket) => (
                     <li key={ticket._id}>
-                        <button onClick={() => openTicketDetails(ticket)}>
+                        <button className="text-style-button" onClick={() => openTicketDetails(ticket)}>
                             {ticket.title} - {ticket.status}
                         </button>
                     </li>
@@ -164,23 +164,26 @@ const ProjectDetails = () => {
                 </div>
             )}
 
+            <h3>Description</h3>
+
             {editing.description ? (
                 <div className="description-edit">
                     <textarea
                         value={editedData.description}
                         onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
-                    ></textarea>
-                    <button onClick={() => handleSave("description")}>Save</button>
-                    <button onClick={() => handleCancel("description")}>Cancel</button>
+                        onBlur={(e) => handleBlur("description", e.target.value)}
+                        autoFocus
+                        onFocus={(e) => e.target.select()}
+                    />
+
                 </div>
             ) : (
                 <>
+                    <FaEdit onClick={() => handleEdit("description")} size={20} className="edit-icon" />
+
                     <div className="description-preview">
-                        <h3>Project description</h3>
-                        <FaEdit onClick={() => handleEdit("description")} size={20} className="edit-icon" />
+                        <p>{editedData.description || project.description}</p>
                     </div>
-                    <p>{project.description}</p>
-                    {/* <button onClick={() => handleEdit("description")}>Edit</button> */}
 
                 </>
             )}

@@ -102,3 +102,17 @@
     color: rgb(0, 255, 0);
     
 }
+
+.text-style-button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    outline: none;
+  }
+  
