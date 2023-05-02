@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
 import api from "../auth/api";
+import { FaPlusCircle } from "react-icons/fa";
 import "./CreateProject.css";
 const TOKEN_KEY = process.env.REACT_APP_TOKEN_HEADER_KEY;
 
@@ -111,7 +112,8 @@ const CreateProject = () => {
                     <ul>
                         {searchResults.map((user) => (
                             <li key={user._id}>
-                                {user.name} <button onClick={(e) => handleAddMember(e, user)}>Add</button>
+                                {user.name} 
+                                <FaPlusCircle onClick={(e) => handleAddMember(e, user)} className="add-user-icon" size={20} />
                             </li>
                         ))}
                     </ul>
@@ -125,7 +127,7 @@ const CreateProject = () => {
                     </ul>
                 </div>
                 {error && <p className="error">{error}</p>}
-                <button type="submit">Create Project</button>
+                <button className="create-project-submit-button" type="submit">Create Project</button>
             </form>
         </div>
     );
