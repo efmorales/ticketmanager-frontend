@@ -1,44 +1,17 @@
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../auth/api";
+import { FaEdit } from "react-icons/fa";
+import './TicketDetails.css';
 
 const TOKEN_KEY = process.env.REACT_APP_TOKEN_HEADER_KEY;
 
-const TicketDetails = () => {
-    const { ticketId } = useParams();
-    const [ticket, setTicket] = useState(null);
+const TicketDetails = (props) => {
+    const { ticket, onUpdateTicket } = props
     const [editing, setEditing] = useState({ title: false, description: false, priority: false, status: false });
     const [editedData, setEditedData] = useState({ title: "", description: "", priority: "low", status: "open" });
     const [projectMembers, setProjectMembers] = useState([]);
 
-
-    useEffect(() => {
-
-
-        const fetchTicket = async () => {
-            try {
-                const { data } = await api.get(`/tickets/${ticketId}`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-                    },
-                });
-
-
-                setTicket(data.ticket);
-                setEditedData({
-                    title: data.ticket.title,
-                    description: data.ticket.description,
-                    priority: data.ticket.priority
-                });
-
-            } catch (error) {
-                console.error("Failed to fetch ticket:", error);
-            }
-        };
-
-        fetchTicket();
-        // console.log(ticket);
-    }, [ticketId]);
 
     useEffect(() => {
         const fetchProjectMembers = async () => {
@@ -60,27 +33,75 @@ const TicketDetails = () => {
     }, [ticket]);
 
     const handleEdit = (field) => {
+        setEditedData((prevData) => ({ ...prevData, [field]: ticket[field] }));
         setEditing({ ...editing, [field]: true });
     };
 
-    const handleSave = async (field) => {
+
+
+    const handleChangeAndSave = async (field, value) => {
         try {
-            const { data } = await api.put(`/tickets/${ticketId}`, { [field]: editedData[field] }, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
-                },
-            });
-            setTicket(data.ticket);
-            setEditing({ ...editing, [field]: false });
+            const { data } = await api.put(
+                `/tickets/${ticket._id}`,
+                { [field]: field === "assignedTo" ? [value] : value },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+                    },
+                }
+            );
+            onUpdateTicket(data.ticket);
+            if (field === "assignedTo") {
+                const assignedMember = projectMembers.find((member) => member._id === value);
+                setEditedData((prevData) => ({ ...prevData, [field]: assignedMember }));
+            } else {
+                setEditedData((prevData) => ({ ...prevData, [field]: value }));
+            }
         } catch (error) {
             console.error("Failed to update ticket:", error);
         }
     };
 
-    const handleCancel = (field) => {
-        setEditedData({ ...editedData, [field]: ticket[field] });
+    const handleBlur = async (field, value) => {
         setEditing({ ...editing, [field]: false });
+
+        try {
+            const { data } = await api.put(
+                `/tickets/${ticket._id}`,
+                { [field]: value },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+                    },
+                }
+            );
+            onUpdateTicket(data.ticket);
+            setEditedData((prevData) => ({ ...prevData, [field]: value }));
+        } catch (error) {
+            console.error("Failed to update ticket:", error);
+        }
     };
+
+
+
+    const editableField = (fieldName) => {
+        return (
+            <input
+                className="field-value-editable"
+                type="text"
+                name={fieldName}
+                id={fieldName}
+                defaultValue={editedData[fieldName]}
+                onBlur={(e) => handleBlur(fieldName, e.target.value)}
+                autoFocus
+                onFocus={(e) => e.target.select()}
+                placeholder="Your text here..."
+                autoComplete="off"
+            />
+        );
+    };
+
+
 
 
     if (!ticket) {
@@ -88,106 +109,70 @@ const TicketDetails = () => {
     }
 
     return (
-        <div>
+        <div className="ticket-details-container">
+
             {editing.title ? (
-                <>
-                    <input
-                        type="text"
-                        value={editedData.title}
-                        onChange={(e) => setEditedData({ ...editedData, title: e.target.value })}
-                    />
-                    <button onClick={() => handleSave("title")}>Save</button>
-                    <button onClick={() => handleCancel("title")}>Cancel</button>
-                </>
+                editableField("title")
             ) : (
-                <>
-                    <h1>{ticket.title}</h1>
-                    <button onClick={() => handleEdit("title")}>Edit</button>
-                </>
-            )}
-
-            {editing.status ? (
-                <>
-                    <select
-                        value={editedData.status}
-                        onChange={(e) => setEditedData({ ...editedData, status: e.target.value })}
-                    >
-                        <option value="open">Open</option>
-                        <option value="in_progress">In Progress</option>
-                        <option value="closed">Closed</option>
-                    </select>
-                    <button onClick={() => handleSave("status")}>Save</button>
-                    <button onClick={() => handleCancel("status")}>Cancel</button>
-                </>
-            ) : (
-                <>
-                    <h3>Status: {ticket.status}</h3>
-                    <button onClick={() => handleEdit("status")}>Edit</button>
-                </>
+                <div className="ticket-title-preview">
+                    <h1>{editedData.title || ticket.title}</h1>
+                    <FaEdit onClick={() => handleEdit("title")} size={20} />
+                </div>
             )}
 
 
-            {editing.priority ? (
-                <>
-                    <select
-                        name="priority"
-                        value={editedData.priority}
-                        onChange={(e) => setEditedData({ ...editedData, priority: e.target.value })}
-                    >
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                    </select>
-                    <button onClick={() => handleSave("priority")}>Save</button>
-                    <button onClick={() => handleCancel("priority")}>Cancel</button>
-                </>
-            ) : (
-                <>
-                    <h3>Priority: {ticket.priority}</h3>
-                    <button onClick={() => handleEdit("priority")}> Edit</button>
-                </>
-            )}
+            <h3>Status:</h3>
+            <label>
+                <select
+                    value={editedData.status || ticket.status}
+                    onChange={(e) => handleChangeAndSave("status", e.target.value)}
+                >
+                    <option value="open">Open</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="closed">Closed</option>
+                </select>
+            </label>
+
+
+            <h3>Priority:</h3>
+            <label>
+
+                <select
+                    value={editedData.priority || ticket.priority}
+                    onChange={(e) => handleChangeAndSave("priority", e.target.value)}
+                >
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </label>
+
             {editing.description ? (
-                <>
-                    <textarea
-                        value={editedData.description}
-                        onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
-                    ></textarea>
-                    <button onClick={() => handleSave("description")}>Save</button>
-                    <button onClick={() => handleCancel("description")}>Cancel</button>
-                </>
+                editableField("description")
             ) : (
                 <>
-                    <h3>Description</h3>
-                    <p>{ticket.description}</p>
-                    <button onClick={() => handleEdit("description")}>Edit</button>
+                    <h3>Description:</h3>
+                    <p>{editedData.description || ticket.description}</p>
+                    <FaEdit onClick={() => handleEdit("description")} size={20} />
                 </>
             )}
 
-            {editing.assignedTo ? (
-                <>
-                    <select
-                        name="assignedTo"
-                        value={editedData.assignedTo}
-                        onChange={(e) => setEditedData({ ...editedData, assignedTo: e.target.value })}
-                    >
-                        {projectMembers.map((member) => (
-                            <option key={member._id} value={member._id}>
-                                {member.name}
-                            </option>
-                        ))}
-                    </select>
-                    <button onClick={() => handleSave("assignedTo")}>Save</button>
-                    <button onClick={() => handleCancel("assignedTo")}>Cancel</button>
-                </>
-            ) : (
-                <>
-                    <h3>
-                        Assigned To: {ticket.assignedTo.length > 0 ? ticket.assignedTo[0].name : "Not assigned"}
-                    </h3>
-                    <button onClick={() => handleEdit("assignedTo")}>Edit</button>
-                </>
-            )}
+
+            <h3>Assigned to:</h3>
+            <label>
+                <select
+                    value={(editedData.assignedTo && editedData.assignedTo._id) || (ticket.assignedTo.length > 0 ? ticket.assignedTo[0]._id : '')}
+                    onChange={(e) => handleChangeAndSave("assignedTo", e.target.value)}
+                >
+                    {projectMembers.map((member) => (
+                        <option key={member._id} value={member._id}>
+                            {member.name}
+                        </option>
+                    ))}
+                </select>
+            </label>
+
+
         </div>
 
 

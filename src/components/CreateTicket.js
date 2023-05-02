@@ -45,15 +45,6 @@ const CreateTicket = () => {
               onChange={handleChange}
               required
             />
-            <br />
-            <label>Description:</label>
-            <textarea
-              name="description"
-              value={ticketData.description}
-              onChange={handleChange}
-              required
-            ></textarea>
-            <br />
             
             <br />
             <button type="submit">Create Ticket</button>

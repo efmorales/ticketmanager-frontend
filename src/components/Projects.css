@@ -1,0 +1,62 @@
+.projects-container {
+    margin-left: 1rem;
+    min-height: 100vh;
+}
+
+.new-project,
+.new-project:link,
+.new-project:visited,
+.new-project:active,
+.projects-container>ul>li>a,
+.projects-container>ul>li>a:link,
+.projects-container>ul>li>a:visited,
+.projects-container>ul>li>a:active {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.new-project {
+    display: flex;
+    font-size: 1rem;
+}
+
+.new-project>h3 {
+    margin-top: 1.4rem;
+    margin-right: 0.5rem;
+}
+
+.circle-icon {
+    margin-top: 3.5rem;
+}
+
+.projects-container>h1 {
+    font-size: 0.9rem;
+    color:rgb(188, 186, 186)
+}
+
+.projects-container>ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.projects-container>ul>li {
+    position: relative;
+    padding-left: 1.2rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.projects-container>ul>li::before {
+    content: "■";
+    position: absolute;
+    left: 0;
+    font-size: 1rem;
+    color: rgb(0, 255, 255);
+    
+}
+
+@media (min-width: 1280px) {
+    .new-project {
+        margin-left: 0rem;
+    }
+}
