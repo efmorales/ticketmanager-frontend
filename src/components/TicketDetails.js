@@ -9,7 +9,7 @@ const TOKEN_KEY = process.env.REACT_APP_TOKEN_HEADER_KEY;
 const TicketDetails = (props) => {
     const { ticket, onUpdateTicket } = props
     const [editing, setEditing] = useState({ title: false, description: false, priority: false, status: false });
-    const [editedData, setEditedData] = useState({ title: "", description: "", priority: "low", status: "open" });
+    const [editedData, setEditedData] = useState({ title: "", description: "", priority: "", status: "" });
     const [projectMembers, setProjectMembers] = useState([]);
 
 
