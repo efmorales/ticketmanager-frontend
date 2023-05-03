@@ -2,6 +2,16 @@
     overflow: scroll;
 }
 
-.ticket-details-container > h1 {
-    padding-top: 0rem;
+.ticket-details-container > .ticket-title-preview > h1 {
+    padding-top: 0.5rem;
+}
+
+select {
+    padding: 0;
+    border-radius: 0.5rem;
+    border: 1px solid #2151C5;
+    font-size: 0.8rem;
+    background-color: #2151C5;
+    color: white;
+    cursor: pointer;
 }

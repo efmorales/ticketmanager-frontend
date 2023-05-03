@@ -91,6 +91,7 @@
     padding-left: 1.2rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    
 }
 
 .project-details-container>ul>li::before {
@@ -98,7 +99,7 @@
     position: absolute;
     left: 0;
     font-size: 1rem;
-    color: rgb(0, 255, 0);
+    color: rgb(60, 180, 180);
     
 }
 
@@ -111,7 +112,7 @@
     font-size: inherit;
     color: inherit;
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
     outline: none;
   }
   
@@ -137,4 +138,33 @@
     background-color: #2151C5;
     color: white;
     cursor: pointer;
+}
+
+.sort-filter-container{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    gap: 1rem;
+    margin-top: 0.5rem;
+    margin-left: 1rem;
+}
+
+.sort-filter-container > div > label {
+    font-size: 0.8rem;
+    color: rgb(188, 186, 186);
+    padding: 0.5rem;
+}
+
+.sort-filter-container > div > select {
+    padding: 0;
+    border-radius: 0.5rem;
+    border: 1px solid #2151C5;
+    font-size: 0.8rem;
+    background-color: #2151C5;
+    color: white;
+    cursor: pointer;
+}
+
+.close-icon {
+    border-radius: 1rem;
 }
