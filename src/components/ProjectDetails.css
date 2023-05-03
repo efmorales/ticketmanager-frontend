@@ -127,3 +127,14 @@
     margin-left: 1.5rem;
   }
 
+.pagination > button {
+    padding: 0.5rem;
+    margin: 1rem;
+    width: 10%;
+    border-radius: 0.5rem;
+    border: 1px solid #2151C5;
+    font-size: 0.8rem;
+    background-color: #2151C5;
+    color: white;
+    cursor: pointer;
+}
