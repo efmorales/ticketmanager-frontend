@@ -1,0 +1,46 @@
+.members-page * {
+  margin: 0;
+  padding: 0;
+}
+
+.members-page {
+  padding: 1em 4em;
+}
+
+.members-page a {
+  all: unset;
+}
+
+.member-list-controls {
+  display: flex;
+  padding: 1em 2em;
+  margin: 2em 0 0;
+  border-bottom: 1px solid rgb(187, 187, 187);
+}
+
+.add-new-member {
+  display: inline-block;
+  min-width: 10em;
+  margin: 2em .25em .5em;
+  padding: .5em 1em;
+  border-radius: 50px;
+  border: 2px solid rgba(187, 187, 187, 0);
+}
+
+.add-new-member:hover {
+  border: 2px solid rgb(187, 187, 187);
+}
+
+.member-list-card {
+  display: flex;
+  gap: 1em;
+  max-width: 30em;
+  padding: .5em 2em;
+  margin: .5em 0;
+  border-left: 3px solid rgba(0, 255, 255, 0);
+}
+
+.member-list-card:hover {
+  cursor: pointer;
+  border-left: 3px solid rgb(0, 255, 255);
+}
