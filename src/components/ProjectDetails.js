@@ -17,6 +17,8 @@ const ProjectDetails = () => {
     const [editedData, setEditedData] = useState({ name: "", description: "", members: [] });
     const [memberData, setMemberData] = useState([]);
     const [tickets, setTickets] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [ticketsToShow, setTicketsToShow] = useState([]);
     const [selectedTicket, setSelectedTicket] = useState(null);
     const [showTicketDetails, setShowTicketDetails] = useState(false);
     const [isCreatingTicket, setIsCreatingTicket] = useState(false);
@@ -24,6 +26,8 @@ const ProjectDetails = () => {
         title: "",
         description: "",
     });
+
+    const itemsPerPage = 10;
 
 
     const fetchTickets = async () => {
@@ -73,8 +77,22 @@ const ProjectDetails = () => {
         fetchProject();
     }, [projectId]);
 
+    useEffect(() => {
+        const lastItemIndex = currentPage * itemsPerPage;
+        const firstItemIndex = lastItemIndex - itemsPerPage;
+        setTicketsToShow(tickets.slice(firstItemIndex, lastItemIndex));
+    }, [tickets, currentPage]);
+
     const handleEdit = (field) => {
         setEditing({ ...editing, [field]: true });
+    };
+
+    const totalPages = Math.ceil(tickets.length / itemsPerPage);
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
     };
 
     const handleBlur = async (field, value) => {
@@ -185,7 +203,7 @@ const ProjectDetails = () => {
 
             <h3>Ticket Backlog:</h3>
             <ul>
-                {tickets.map((ticket) => (
+                {ticketsToShow.map((ticket) => (
                     <li key={ticket._id}>
                         <button className="text-style-button" onClick={() => openTicketDetails(ticket)}>
                             {ticket.title} - {ticket.status}
@@ -193,6 +211,16 @@ const ProjectDetails = () => {
                     </li>
                 ))}
             </ul>
+
+            <div className="pagination">
+                <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                    Previous
+                </button>
+                <span>Page {currentPage} of {totalPages}</span>
+                <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                    Next
+                </button>
+            </div>
 
             {showTicketDetails && (
                 <div className="modal-overlay" onClick={handleClickOutside}>
