@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { useAuth } from "../auth/AuthContext";
+import { useAuth } from "../auth/AuthContext";
 
 import api from "../auth/api";
+import { FaPlusCircle } from "react-icons/fa";
+import "./CreateProject.css";
 const TOKEN_KEY = process.env.REACT_APP_TOKEN_HEADER_KEY;
 
 
@@ -14,7 +16,7 @@ const CreateProject = () => {
     const [searchResults, setSearchResults] = useState([]);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    // const { loggedInUser } = useAuth();
+    const { loggedInUser } = useAuth();
 
 
     const handleSubmit = async (e) => {
@@ -55,11 +57,11 @@ const CreateProject = () => {
             // console.log(loggedInUser);
 
             // Filter out the logged-in user from the search results
-            // const filteredResults = data.filter(
-            //     (user) => user._id !== loggedInUser._id
-            // );
+            const filteredResults = data.filter(
+                (user) => user._id !== loggedInUser._id
+            );
 
-            setSearchResults(data);
+            setSearchResults(filteredResults);
         } catch (err) {
             console.error(err);
             setSearchResults([]);
@@ -76,10 +78,10 @@ const CreateProject = () => {
 
 
     return (
-        <div>
+        <div className="create-project-container">
             <h1>Create Project</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
+            <form className="create-project-form" onSubmit={handleSubmit}>
+                <div className="create-project-name-div">
                     <label htmlFor="name">Project Name:</label>
                     <input
                         type="text"
@@ -88,7 +90,7 @@ const CreateProject = () => {
                         onChange={(e) => setName(e.target.value)}
                     />
                 </div>
-                <div>
+                <div className="create-project-description-div">
                     <label htmlFor="description">Project Description:</label>
                     <textarea
                         id="description"
@@ -96,7 +98,7 @@ const CreateProject = () => {
                         onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
                 </div>
-                <div>
+                <div className="create-project-search-div">
                     <label htmlFor="search">Add Members:</label>
                     <input
                         type="text"
@@ -110,12 +112,13 @@ const CreateProject = () => {
                     <ul>
                         {searchResults.map((user) => (
                             <li key={user._id}>
-                                {user.name} <button onClick={(e) => handleAddMember(e, user)}>Add</button>
+                                {user.name} 
+                                <FaPlusCircle onClick={(e) => handleAddMember(e, user)} className="add-user-icon" size={20} />
                             </li>
                         ))}
                     </ul>
                 </div>
-                <div>
+                <div className="create-project-members-div">
                     <h3>Selected Members:</h3>
                     <ul>
                         {members.map((member) => (
@@ -124,7 +127,7 @@ const CreateProject = () => {
                     </ul>
                 </div>
                 {error && <p className="error">{error}</p>}
-                <button type="submit">Create Project</button>
+                <button className="create-project-submit-button" type="submit">Create Project</button>
             </form>
         </div>
     );

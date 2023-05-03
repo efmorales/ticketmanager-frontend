@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../auth/api";
-import { FaPlusCircle, FaEdit, FaWindowClose } from "react-icons/fa";
+import { FaPlusCircle, FaEdit, FaWindowClose, FaCircle } from "react-icons/fa";
 import TicketDetails from './TicketDetails';
 import './ProjectDetails.css';
 import './modal.css';
@@ -17,6 +17,8 @@ const ProjectDetails = () => {
     const [editedData, setEditedData] = useState({ name: "", description: "", members: [] });
     const [memberData, setMemberData] = useState([]);
     const [tickets, setTickets] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [ticketsToShow, setTicketsToShow] = useState([]);
     const [selectedTicket, setSelectedTicket] = useState(null);
     const [showTicketDetails, setShowTicketDetails] = useState(false);
     const [isCreatingTicket, setIsCreatingTicket] = useState(false);
@@ -24,6 +26,11 @@ const ProjectDetails = () => {
         title: "",
         description: "",
     });
+    const [sortCriteria, setSortCriteria] = useState("latest"); // default sort by latest changes
+    const [filterCriteria, setFilterCriteria] = useState(""); // no filter by default
+
+
+    const itemsPerPage = 10;
 
 
     const fetchTickets = async () => {
@@ -39,6 +46,31 @@ const ProjectDetails = () => {
         }
     };
 
+    const sortAndFilterTickets = (tickets) => {
+        let sortedTickets = [...tickets];
+
+        if (sortCriteria === "latest") {
+            sortedTickets.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+        } else if (sortCriteria === "highPriority") {
+            sortedTickets = sortedTickets.filter((ticket) => ticket.priority.toLowerCase() === "high");
+        } else if (sortCriteria === "mediumPriority") {
+            sortedTickets = sortedTickets.filter((ticket) => ticket.priority.toLowerCase() === "medium");
+        } else if (sortCriteria === "lowPriority") {
+            sortedTickets = sortedTickets.filter((ticket) => ticket.priority.toLowerCase() === "low");
+        }
+
+        // Sort filtered tickets by latest changes
+        sortedTickets.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+
+        if (filterCriteria) {
+            sortedTickets = sortedTickets.filter((ticket) => ticket.status === filterCriteria);
+        }
+
+        return sortedTickets;
+    };
+
+
+
     useEffect(() => {
 
 
@@ -50,12 +82,11 @@ const ProjectDetails = () => {
                     },
                 });
                 setProject(data);
-                fetchTickets();
                 setEditedData({ name: data.name, description: data.description, members: data.members });
                 const fetchMemberData = async (memberIds) => {
                     const memberPromises = memberIds.map(async (id) => {
                         const { data } = await api.get(`/users/${id}`, {
-                            headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}}` },
+                            headers: { Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}` },
                         });
                         return data;
                     });
@@ -73,9 +104,32 @@ const ProjectDetails = () => {
         fetchProject();
     }, [projectId]);
 
+    useEffect(() => {
+        fetchTickets();
+    }, [projectId]);
+
+    useEffect(() => {
+        const lastItemIndex = currentPage * itemsPerPage;
+        const firstItemIndex = lastItemIndex - itemsPerPage;
+        const sortedAndFilteredTickets = sortAndFilterTickets(tickets);
+        setTicketsToShow(sortedAndFilteredTickets.slice(firstItemIndex, lastItemIndex));
+    }, [tickets, currentPage, sortCriteria, filterCriteria]);
+
+
     const handleEdit = (field) => {
-        setEditing({ ...editing, [field]: true });
+        setEditing((prevEditing) => ({ ...prevEditing, [field]: true }));
     };
+
+
+    const sortedAndFilteredTickets = sortAndFilterTickets(tickets);
+    const totalPages = Math.ceil(sortedAndFilteredTickets.length / itemsPerPage);
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setCurrentPage(newPage);
+        }
+    };
+
 
     const handleBlur = async (field, value) => {
         setEditing({ ...editing, [field]: false });
@@ -138,6 +192,19 @@ const ProjectDetails = () => {
         }
     };
 
+    const getStatusInfo = (status) => {
+        switch (status) {
+            case "open":
+                return { color: "green", icon: <FaCircle size={12} /> };
+            case "in_progress":
+                return { color: "orange", icon: <FaCircle size={12} /> };
+            case "closed":
+                return { color: "red", icon: <FaCircle size={12} /> };
+            default:
+                return { color: "gray", icon: <FaCircle size={12} /> };
+        }
+    };
+
 
     if (!project) {
         return <div>Loading...</div>;
@@ -183,16 +250,62 @@ const ProjectDetails = () => {
                 </div>
             )}
 
-            <h3>Ticket Backlog</h3>
+            <h3>Ticket Backlog:</h3>
+
+            <div className="sort-filter-container">
+                <div>
+                    <label htmlFor="sort">Sort by: </label>
+                    <select
+                        name="sort"
+                        value={sortCriteria}
+                        onChange={(e) => setSortCriteria(e.target.value)}
+                    >
+                        <option value="latest">Latest Changes</option>
+                        <option value="highPriority">High Priority</option>
+                        <option value="mediumPriority">Medium Priority</option>
+                        <option value="lowPriority">Low Priority</option>
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="filter">Filter by status: </label>
+                    <select
+                        name="filter"
+                        value={filterCriteria || ""}
+                        onChange={(e) => setFilterCriteria(e.target.value || null)}
+                    >
+                        <option value="">All</option>
+                        <option value="open">Open</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+            </div>
+
             <ul>
-                {tickets.map((ticket) => (
-                    <li key={ticket._id}>
-                        <button className="text-style-button" onClick={() => openTicketDetails(ticket)}>
-                            {ticket.title} - {ticket.status}
-                        </button>
-                    </li>
-                ))}
+                {ticketsToShow.map((ticket) => {
+                    const { color, icon } = getStatusInfo(ticket.status);
+                    return (
+                        <li key={ticket._id}>
+                            <button className="text-style-button" onClick={() => openTicketDetails(ticket)}>
+                                {ticket.title}{' '}
+                                <span style={{ color }}>
+                                    {icon} {ticket.status.replace('_', ' ')}
+                                </span>
+                            </button>
+                        </li>
+                    );
+                })}
             </ul>
+
+            <div className="pagination">
+                <button onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
+                    ◀
+                </button>
+                <span>Page {currentPage} of {totalPages}</span>
+                <button onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+                    ▶
+                </button>
+            </div>
 
             {showTicketDetails && (
                 <div className="modal-overlay" onClick={handleClickOutside}>
@@ -203,36 +316,45 @@ const ProjectDetails = () => {
                 </div>
             )}
 
-            <h3>Description</h3>
+            <div className="project-description-div">
 
-            {editing.description ? (
-                <div className="description-edit">
-                    <textarea
-                        value={editedData.description}
-                        onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
-                        onBlur={(e) => handleBlur("description", e.target.value)}
-                        autoFocus
-                        onFocus={(e) => e.target.select()}
-                    />
+                <div className="project-description-edit">
+                    <h3> Project description:</h3>
 
-                </div>
-            ) : (
-                <>
                     <FaEdit onClick={() => handleEdit("description")} size={20} className="edit-icon" />
+                </div>
 
-                    <div className="description-preview">
-                        <p>{editedData.description || project.description}</p>
+                {editing.description ? (
+                    <div className="description-edit">
+                        <textarea
+                            value={editedData.description}
+                            onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
+                            onBlur={(e) => handleBlur("description", e.target.value)}
+                            autoFocus
+                            onFocus={(e) => e.target.select()}
+                        />
+
                     </div>
+                ) : (
+                    <>
 
-                </>
-            )}
+                        <div className="description-preview">
+                            <p>{editedData.description || project.description}</p>
+                        </div>
 
-            <h3>Members</h3>
-            <ul>
-                {memberData.map((member) => (
-                    <li key={member._id}>{member.name}</li>
-                ))}
-            </ul>
+                    </>
+                )}
+            </div>
+
+            <div className="project-members-div">
+
+                <h3>Members:</h3>
+                <ul>
+                    {memberData.map((member) => (
+                        <li key={member._id}>{member.name}</li>
+                    ))}
+                </ul>
+            </div>
 
 
 
