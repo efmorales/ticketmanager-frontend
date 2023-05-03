@@ -1,0 +1,45 @@
+.member-profile-page * {
+  margin: 0;
+  padding: 0;
+}
+
+.member-profile h1,
+.member-profile h2,
+.member-profile h3,
+.member-profile h4 {
+  margin: 0;
+  padding: 0 !important;
+}
+
+.member-profile {
+  padding: 2em;
+}
+
+.field-name {
+  margin-bottom: .5em;
+}
+
+.page-title {
+  margin: 0 0 3em;
+  font-size: small;
+}
+
+.member-name {
+  padding: 0;
+  margin: 0;
+}
+
+.member-title {
+  margin: .5em 0;
+  font-size: small;
+}
+
+.member-about {
+  margin: 2em 0;
+}
+
+@media (min-width: 800px) {
+  .member-profile {
+    padding: 1em 4em;
+  }
+}
