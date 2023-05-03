@@ -183,7 +183,7 @@ const ProjectDetails = () => {
                 </div>
             )}
 
-            <h3>Ticket Backlog</h3>
+            <h3>Ticket Backlog:</h3>
             <ul>
                 {tickets.map((ticket) => (
                     <li key={ticket._id}>
@@ -203,36 +203,45 @@ const ProjectDetails = () => {
                 </div>
             )}
 
-            <h3>Description</h3>
+            <div className="project-description-div">
 
-            {editing.description ? (
-                <div className="description-edit">
-                    <textarea
-                        value={editedData.description}
-                        onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
-                        onBlur={(e) => handleBlur("description", e.target.value)}
-                        autoFocus
-                        onFocus={(e) => e.target.select()}
-                    />
+                <div className="project-description-edit">
+                    <h3> Project description:</h3>
 
-                </div>
-            ) : (
-                <>
                     <FaEdit onClick={() => handleEdit("description")} size={20} className="edit-icon" />
+                </div>
 
-                    <div className="description-preview">
-                        <p>{editedData.description || project.description}</p>
+                {editing.description ? (
+                    <div className="description-edit">
+                        <textarea
+                            value={editedData.description}
+                            onChange={(e) => setEditedData({ ...editedData, description: e.target.value })}
+                            onBlur={(e) => handleBlur("description", e.target.value)}
+                            autoFocus
+                            onFocus={(e) => e.target.select()}
+                        />
+
                     </div>
+                ) : (
+                    <>
 
-                </>
-            )}
+                        <div className="description-preview">
+                            <p>{editedData.description || project.description}</p>
+                        </div>
 
-            <h3>Members</h3>
-            <ul>
-                {memberData.map((member) => (
-                    <li key={member._id}>{member.name}</li>
-                ))}
-            </ul>
+                    </>
+                )}
+            </div>
+
+            <div className="project-members-div">
+
+                <h3>Members:</h3>
+                <ul>
+                    {memberData.map((member) => (
+                        <li key={member._id}>{member.name}</li>
+                    ))}
+                </ul>
+            </div>
 
 
 
