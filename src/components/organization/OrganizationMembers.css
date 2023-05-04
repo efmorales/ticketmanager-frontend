@@ -13,25 +13,39 @@
 
 .member-list-controls {
   display: flex;
-  padding: 1em 2em;
+  gap: .5em;
+  flex-flow: row wrap;
+  padding: .5em 2em;
   margin: 2em 0 0;
   border-bottom: 1px solid rgb(187, 187, 187);
 }
 
-.add-new-member {
-  display: inline-block;
-  min-width: 10em;
-  margin: 2em .25em .5em;
+.member-control {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  font-family: Inter;
+  width: 13em;
+  margin: 0 .25em .5em;
   padding: .5em 1em;
   border-radius: 50px;
   border: 2px solid rgba(187, 187, 187, 0);
 }
 
-.add-new-member:hover {
-  border: 2px solid rgb(187, 187, 187);
+.member-control:hover {
+  cursor: pointer;
+  /* border: 2px solid rgb(187, 187, 187); */
 }
 
-.member-list-card {
+.search-members {
+  margin: 1em 2em;
+}
+
+.member-list {
+  margin-top: 2.5em;
+}
+
+.member-card {
   display: flex;
   gap: 1em;
   max-width: 30em;
@@ -40,7 +54,11 @@
   border-left: 3px solid rgba(0, 255, 255, 0);
 }
 
-.member-list-card:hover {
+.member-card:hover {
   cursor: pointer;
   border-left: 3px solid rgb(0, 255, 255);
+}
+
+.member-list-card-info > .member-title {
+  margin-top: .5em;
 }
