@@ -1,4 +1,4 @@
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import api from "../../auth/api";
 import { FaEdit } from "react-icons/fa";
@@ -7,7 +7,7 @@ import "../TicketDetails.css";
 const TOKEN_KEY = process.env.REACT_APP_TOKEN_HEADER_KEY;
 
 const TicketDetails = (props) => {
-  const { ticket, onUpdateTicket } = props;
+  const { ticket, onUpdateTicket, closeTicketDetails } = props;
   const [editing, setEditing] = useState({
     title: false,
     description: false,
@@ -21,6 +21,8 @@ const TicketDetails = (props) => {
     status: "",
   });
   const [projectMembers, setProjectMembers] = useState([]);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const navigate = useNavigate();
 
   const { organization } = useOutletContext();
 
@@ -113,6 +115,21 @@ const TicketDetails = (props) => {
     );
   };
 
+  const handleDeleteTicket = async () => {
+    try {
+      await api.delete(`/tickets/${ticket._id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+        },
+      });
+      onUpdateTicket(null, ticket._id);
+      closeTicketDetails();
+      navigate(`/user/projects/`);
+    } catch (error) {
+      console.error("Failed to delete ticket:", error);
+    }
+  };
+
   if (!ticket) {
     return <div>Loading...</div>;
   }
@@ -178,6 +195,22 @@ const TicketDetails = (props) => {
           ))}
         </select>
       </label>
+
+      <div className="ticket-details-delete-div">
+        {showDeleteConfirmation ? (
+          <>
+            <p>Are you sure you want to delete this ticket?</p>
+            <button onClick={handleDeleteTicket}>Confirm</button>
+            <button onClick={() => setShowDeleteConfirmation(false)}>
+              Cancel
+            </button>
+          </>
+        ) : (
+          <button onClick={() => setShowDeleteConfirmation(true)}>
+            Delete Ticket
+          </button>
+        )}
+      </div>
     </div>
   );
 };
