@@ -46,15 +46,6 @@ const OrganizationLayout = () => {
           <li onClick={handleClick}>
             <NavLink to="members">Members</NavLink>
           </li>
-          <li onClick={handleClick}>
-            <NavLink to="#">Link 3</NavLink>
-          </li>
-          <li onClick={handleClick}>
-            <NavLink to="#">Link 4</NavLink>
-          </li>
-          <li onClick={handleClick}>
-            <NavLink to="#">Link 5</NavLink>
-          </li>
         </ul>
       </nav>
       <section className="page-content">
