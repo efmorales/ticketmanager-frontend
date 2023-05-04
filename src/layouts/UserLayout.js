@@ -40,15 +40,7 @@ const UserLayout = () => {
           <li onClick={handleClick}>
             <NavLink to="projects">Projects</NavLink>
           </li>
-          <li onClick={handleClick}>
-            <NavLink to="#">Link 3</NavLink>
-          </li>
-          <li onClick={handleClick}>
-            <NavLink to="#">Link 4</NavLink>
-          </li>
-          <li onClick={handleClick}>
-            <NavLink to="#">Link 5</NavLink>
-          </li>
+
         </ul>
       </nav>
       <section className="page-content">
