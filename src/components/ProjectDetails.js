@@ -6,8 +6,6 @@ import TicketDetails from './TicketDetails';
 import './ProjectDetails.css';
 import './modal.css';
 
-
-
 const TOKEN_KEY = process.env.REACT_APP_TOKEN_HEADER_KEY;
 
 const ProjectDetails = () => {
@@ -170,11 +168,16 @@ const ProjectDetails = () => {
 
 
 
-    const updateTicket = (updatedTicket) => {
-        setTickets((prevTickets) =>
+    const updateTicket = (updatedTicket, removedTicketId) => {
+        if (removedTicketId) {
+          setTickets((prevTickets) => prevTickets.filter((ticket) => ticket._id !== removedTicketId));
+        } else {
+          setTickets((prevTickets) =>
             prevTickets.map((ticket) => (ticket._id === updatedTicket._id ? updatedTicket : ticket))
-        );
-    };
+          );
+        }
+      };
+      
 
     const openTicketDetails = (ticket) => {
         setSelectedTicket(ticket);
@@ -311,7 +314,7 @@ const ProjectDetails = () => {
                 <div className="modal-overlay" onClick={handleClickOutside}>
                     <div className="modal">
                         <FaWindowClose onClick={closeTicketDetails} size={30} className="close-icon" />
-                        <TicketDetails ticket={selectedTicket} onUpdateTicket={updateTicket} />
+                        <TicketDetails ticket={selectedTicket} onUpdateTicket={updateTicket} closeTicketDetails={closeTicketDetails} />
                     </div>
                 </div>
             )}
