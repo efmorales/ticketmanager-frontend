@@ -35,10 +35,10 @@ const OrgMemberProfile = () => {
         <h1 className="member-name">{user.name}</h1>
         {/* <p>{member.permissions}</p> */}
         <p className="member-title">{member.title}</p>
-        <p className="member-about">
-          <div className="field-name">About</div>
+        <div className="member-about">
+          <div className="field-name">About</div> 
           {member.about}
-        </p>
+        </div>
       </div>
     </div>
   );
