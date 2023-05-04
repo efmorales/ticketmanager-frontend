@@ -4,11 +4,10 @@ import { Link, useOutletContext } from "react-router-dom";
 import { FaPlusCircle } from "react-icons/fa";
 import "../Projects.css";
 
-const API_BASE_URL = process.env.REACT_APP_API_URL;
 const headerToken = process.env.REACT_APP_TOKEN_HEADER_KEY;
 
 const OrganizationProjects = () => {
-  const { organization, members } = useOutletContext();
+  const { organization } = useOutletContext();
 
   const [projects, setProjects] = useState([]);
 
@@ -18,7 +17,7 @@ const OrganizationProjects = () => {
         const token = localStorage.getItem(headerToken);
         if (token) {
           const response = await api.get(
-            `${API_BASE_URL}/organizations/${organization._id}/projects`,
+            `/organizations/${organization._id}/projects`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
