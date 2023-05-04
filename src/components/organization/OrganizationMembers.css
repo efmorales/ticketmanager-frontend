@@ -62,3 +62,16 @@
 .member-list-card-info > .member-title {
   margin-top: .5em;
 }
+
+.search-members {
+  display: flex;
+  gap: .5em;
+  align-items: center;
+}
+
+#search {
+  all: unset;
+  border: 2px solid rgb(187, 187, 187);
+  border-radius: 50px;
+  padding: .5em 1em;
+}
