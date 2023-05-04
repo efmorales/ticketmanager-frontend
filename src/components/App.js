@@ -26,6 +26,9 @@ import OrganizationProfile from "./organization/OrganizationProfile";
 import OrgMemberProfile, { loader as orgMemberProfileLoader} from "./organization/OrgMemberProfile";
 import OrganizationMembers from "./organization/OrganizationMembers";
 import OrganizationProjects from "./organization/OrganizationProjects";
+import CreateOrgProject from "./organization/CreateOrgProject"
+import OrgProjectDetails from "./organization/OrgProjectDetails"
+import OrgTicketDetails from "./organization/OrgTicketDetails"
 
 import Error from "./Error";
 import Projects from "./Projects";
@@ -87,6 +90,13 @@ function App() {
             loader={(params) => orgMemberProfileLoader(params)}
           />
           <Route path="projects" element={<OrganizationProjects />} />
+          <Route path="projects/new" element={<CreateOrgProject />} />
+          <Route path="projects/:projectId" element={<OrgProjectDetails />} />
+          <Route path="tickets/:ticketId" element={<OrgTicketDetails />} />
+          <Route
+            path="projects/:projectId/create-ticket"
+            element={<CreateTicket />}
+          />
         </Route>
 
         <Route path="*" element={<Error />} />
