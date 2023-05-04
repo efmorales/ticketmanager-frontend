@@ -42,7 +42,7 @@ const OrganizationMembers = ({ children }) => {
       {isListSelected ? (
         <MembersList members={members} />
       ) : (
-        <AddNewMember message="Hello Props!" />
+        <AddNewMember setIsListSelected={setIsListSelected} />
       )}
     </div>
   );
