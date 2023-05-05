@@ -58,7 +58,6 @@ const AddNewMember = () => {
           {user.name}
         </div>
       </div>
-      // </Link>
     );
   });
 
