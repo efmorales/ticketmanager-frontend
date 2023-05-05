@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import { FaPlusCircle, FaArrowCircleLeft } from "react-icons/fa";
+import UserOrganizationsList from "./UserOrganizationsList";
+import NewOrganization from "./NewOrganization";
+
 import "./UserOrganizations.css";
 
 import axios from "axios";
@@ -9,28 +12,33 @@ const UserOrganizations = () => {
   const userOrgsData = useLoaderData();
 
   const [userOrgs] = useState(userOrgsData);
+  const [isListSelected, setIsListSelected] = useState(true);
+
+  const handleToggle = () => {
+    setIsListSelected(!isListSelected);
+  };
 
   return (
     <div className="user-organizations-page">
       <div className="page-controls">
-        Orgs Listing Page controls will go here
+        <div onClick={handleToggle}>
+          {isListSelected ? (
+            <div className="member-control">
+              <FaPlusCircle size={20} /> <span>Create New</span>
+            </div>
+          ) : (
+            <div className="member-control">
+              <FaArrowCircleLeft size={20} /> <span>Back to Organizations</span>
+            </div>
+          )}
+        </div>
       </div>
-      <div className="orgs-list">
-        {userOrgs.map((org) => {
-          const { _id, name, description } = org.parentOrg;
-          return (
-            <Link
-              className="organization-link"
-              to={`/organization/${_id}`}
-              key={_id}
-            >
-              <div className="organization-card" key={org._id}>
-                <h2>{name}</h2>
-                <p className="organization-description">{description}</p>
-              </div>
-            </Link>
-          );
-        })}
+      <div className="user-orgs-container">
+        {isListSelected ? (
+          <UserOrganizationsList userOrgs={userOrgs} />
+        ) : (
+          <NewOrganization />
+        )}
       </div>
     </div>
   );

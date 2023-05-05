@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import { FaPlusCircle, FaArrowCircleLeft, FaSearch } from "react-icons/fa";
+import { FaPlusCircle, FaArrowCircleLeft } from "react-icons/fa";
 
 import MembersList from "./MembersList";
 import AddNewMember from "./AddNewMember";

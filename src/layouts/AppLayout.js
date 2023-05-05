@@ -10,10 +10,10 @@ const AppLayout = () => {
   return (
     <>
       <header className="app-header">
-        <NavLink to="/">Home</NavLink>
         {loggedInUser ? (
           <>
-            <NavLink to="/organization">Organizations</NavLink>
+        <NavLink to="/" className="home-link">TICKET MANAGER</NavLink>
+            <NavLink to="/user/organizations">Organizations</NavLink>
             <NavLink to="/user">Personal</NavLink>
             <NavLink to="/" onClick={logout}>
               Logout
