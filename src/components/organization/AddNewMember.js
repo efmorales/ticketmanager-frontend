@@ -23,6 +23,7 @@ const AddNewMember = () => {
 
     const { data } = await api.get(`/users/search?name=${searchText.search}`);
     setReturnedUsers(data);
+    setSearchText({ search: "" });
   };
 
   const addNewMember = async (userId) => {
@@ -37,6 +38,7 @@ const AddNewMember = () => {
         name="search"
         id="search"
         placeholder="Find user..."
+        autoComplete="off"
         value={searchText.search}
         onChange={handleChange}
       />
