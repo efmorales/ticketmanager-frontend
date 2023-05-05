@@ -1,17 +1,34 @@
 import { useState } from "react";
-import { FaArrowCircleLeft, FaSearch } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import { FaSearch, FaRegUserCircle } from "react-icons/fa";
 
 import api from "../../auth/api";
 
+const AddNewMember = () => {
+  const [searchText, setSearchText] = useState({ search: "" });
+  const [returnedUsers, setReturnedUsers] = useState([]);
 
-const AddNewMember = ({ isListSelected }) => {
+  const { orgId } = useParams();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSearchText((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleUserSearchSubmit = async (e) => {
     e.preventDefault();
 
-    const searchResults = await api.get("/")
+    const { data } = await api.get(`/users/search?name=${searchText.search}`);
+    setReturnedUsers(data);
+  };
 
-  }
+  const addNewMember = async (userId) => {
+    await api.post(`/organizations/${orgId}/members/${userId}`);
+    window.location.reload(false);
+  };
 
   const searchUsers = (
     <form className="search-members" onSubmit={handleUserSearchSubmit}>
@@ -20,29 +37,35 @@ const AddNewMember = ({ isListSelected }) => {
         name="search"
         id="search"
         placeholder="Find user..."
+        value={searchText.search}
+        onChange={handleChange}
       />
-      <FaSearch size={20} />
+      <FaSearch size={20} onClick={handleUserSearchSubmit} />
     </form>
   );
 
-  return <>{searchUsers}</>;
+  const returnedUsersList = returnedUsers.map((user) => {
+    return (
+      <div
+        className="member-card new-user-card"
+        key={user._id}
+        onClick={() => addNewMember(user._id)}
+      >
+        <FaRegUserCircle size={30} />
+        <div className="member-list-card-info new-user-info">
+          {user.name}
+        </div>
+      </div>
+      // </Link>
+    );
+  });
+
+  return (
+    <>
+      {searchUsers}
+      {returnedUsersList}
+    </>
+  );
 };
 
 export default AddNewMember;
-
-// import { FaArrowCircleLeft, FaSearch } from "react-icons/fa";
-
-// const AddNewMember = ({ isListSelected }) => {
-//   return (
-//     <>
-//       <div className="search-members">
-//         {/* <span>Search Users</span> */}
-//         <input type="search" name="search" id="search" placeholder="Find user..." /><FaSearch size={20} />
-//       </div>
-//       <h1>Add New Member Page will go here!!</h1>
-//       {message}
-//     </>
-//   );
-// };
-
-// export default AddNewMember;
