@@ -32,17 +32,10 @@ const OrganizationMembers = ({ children }) => {
           )}
         </div>
       </div>
-      {/* <div className="member-control search-members">
-        <FaSearch size={20} /> <span>Search Members</span>
-      </div> */}
-      {/* <Link to="new" className="add-new-member">
-        
-        <span>ADD NEW MEMBER</span>
-      </Link> */}
       {isListSelected ? (
         <MembersList members={members} />
       ) : (
-        <AddNewMember setIsListSelected={setIsListSelected} />
+        <AddNewMember />
       )}
     </div>
   );

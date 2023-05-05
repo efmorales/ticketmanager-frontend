@@ -7,7 +7,7 @@ const MembersList = ({ members }) => {
       <div className="member-list">
         {members.map((member) => {
           return (
-            <Link to={`${member._id}`}>
+            <Link to={`${member._id}`} key={member._id}>
               <div className="member-card" key={member._id}>
                 <FaRegUserCircle size={40} />
                 <div className="member-list-card-info">

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import "./UserOrganizations.css";
 
@@ -8,11 +8,7 @@ import axios from "axios";
 const UserOrganizations = () => {
   const userOrgsData = useLoaderData();
 
-  const [userOrgs, setUserOrgs] = useState([]);
-
-  useEffect(() => {
-    setUserOrgs(userOrgsData);
-  }, []);
+  const [userOrgs] = useState(userOrgsData);
 
   return (
     <div className="user-organizations-page">
@@ -23,7 +19,11 @@ const UserOrganizations = () => {
         {userOrgs.map((org) => {
           const { _id, name, description } = org.parentOrg;
           return (
-            <Link className="organization-link" to={`/organization/${_id}`}>
+            <Link
+              className="organization-link"
+              to={`/organization/${_id}`}
+              key={_id}
+            >
               <div className="organization-card" key={org._id}>
                 <h2>{name}</h2>
                 <p className="organization-description">{description}</p>
