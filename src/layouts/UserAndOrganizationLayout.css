@@ -22,6 +22,7 @@ h3 {
 
 .side-nav-toggle {
   all: unset;
+  z-index: 1000;
   color: #fff;
   position: absolute;
   top: .3em;
