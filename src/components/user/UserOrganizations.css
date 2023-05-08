@@ -84,6 +84,14 @@
   border-radius: 10px;
 }
 
+.new-org-error-message {
+  color: red !important;
+  font-size: smaller ;
+  float: right;
+  margin: 0;
+  padding: 0;
+}
+
 .new-org-submit {
   border: none;
   border-radius: 5px;
