@@ -3,19 +3,22 @@ import api from "../../auth/api";
 import { useAuth } from "../../auth/AuthContext"
 
 const NewOrganization = () => {
-
+  
   const { loggedInUser } = useAuth();
-
+  
   const formReset = {
     name: "",
     owner: loggedInUser._id,
     description: "",
   };
-
+  
   const [newOrg, setNewOrg] = useState(formReset);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    setErrorMessage("");
 
     setNewOrg((prev) => ({
       ...prev,
@@ -28,7 +31,10 @@ const NewOrganization = () => {
 
     try {
       const { data } = await api.post("/organizations", JSON.stringify(newOrg));
-      console.log(data)
+      if (data.error) {
+        setErrorMessage(data.error)
+        return;
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -39,9 +45,9 @@ const NewOrganization = () => {
 
   return (
     <form className="new-org-form" onSubmit={handleSubmit}>
-
       <label htmlFor="name">
-        Name: <br />
+        Name: 
+        <br />
         <input
           required
           type="text"
@@ -51,6 +57,7 @@ const NewOrganization = () => {
           onChange={(e) => handleChange(e)}
           autoComplete="off"
         />
+        <div className="new-org-error-message">{errorMessage}</div>
       </label>
 
       <label htmlFor="description">
@@ -64,32 +71,11 @@ const NewOrganization = () => {
         ></textarea>
       </label>
 
-      <button type="submit" className="new-org-submit">Create</button>
-
+      <button type="submit" className="new-org-submit">
+        Create
+      </button>
     </form>
   );
 };
 
 export default NewOrganization;
-
-
-//  const mockOrgData = {
-//     name: {
-//       type: String,
-//       required: [true, "Your new organization must have a name."],
-//       unique: true,
-//       trim: true,
-//       maxLength: [100, "Exceeded character limit of 100."],
-//     },
-//     owner: {
-//       type: Schema.Types.ObjectId,
-//       ref: "User",
-//       required: [true, "Your organization must have an assigned owner."],
-//     },
-//     description: {
-//       type: String,
-//       trim: true,
-//       maxLength: [1000, "Exceeded character limit of 1,000."],
-//     },
-//     members: [{ type: Schema.Types.ObjectId, ref: "OrgMember" }], // TODO: Make this a virtual
-//   }
