@@ -1,0 +1,13 @@
+.home-page-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.home-page-title {
+  font-family: 'Bebas Neue', cursive;
+  margin: 2em auto o;
+  font-size: 5em;
+}

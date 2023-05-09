@@ -1,0 +1,139 @@
+.organization-page {
+  position: relative;
+  height: 100%;
+}
+
+.organization-page h1,
+h2,
+h3 {
+  margin: 0;
+  padding-top: 2em;
+}
+
+.side-nav {
+  position: absolute;
+  z-index: 1000;
+  padding: 0;
+  color: #fff;
+  background-color: #222328;
+  height: 100%;
+  width: 100%;
+}
+
+.side-nav-toggle {
+  all: unset;
+  z-index: 1000;
+  color: #fff;
+  position: absolute;
+  top: .3em;
+  left: .4em;
+}
+
+.side-nav-toggle:hover {
+  cursor: pointer;
+}
+
+.open {
+  display: block;
+}
+
+.close {
+  display: none;
+}
+
+.profile-link {
+  border-bottom: 1px solid rgb(164, 164, 164);
+  padding: 3em 5em 2em;
+  margin: auto;
+}
+
+.profile-link a {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .9em;
+}
+
+.profile-link a {
+  cursor: pointer;
+}
+
+.profile-link a div span:not(.display-type):hover {
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.display-type {
+  font-size: .75em;
+  color: rgb(218, 218, 218);
+}
+
+.side-nav ul {
+  text-align: center;
+  list-style-type: none;
+  flex-direction: column;
+  padding: 0 .1em;
+}
+
+.side-nav ul li {
+  display: block;
+  min-width: 14.5em;
+}
+
+.side-nav ul li a {
+  all: unset;
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  padding: .5em 1em;
+}
+
+.side-nav ul li a:hover {
+  background-color: rgb(59, 59, 59);
+  cursor: pointer;
+}
+
+.page-content {
+  width: 100%;
+}
+
+@media (min-width: 800px) {
+  .organization-page {
+    display: flex;
+  }
+
+  .close {
+    display: block;
+  }
+
+  .side-nav-toggle {
+    display: none;
+  }
+
+  .side-nav {
+    position: unset;
+    width: 15em;
+    border: 3px solid rgb(172, 172, 172);
+    border-radius: 15px;
+    margin: 2em;
+  }
+
+  .profile-link {
+    padding: 1em;
+  }
+
+  .side-nav ul {
+    text-align: unset;
+  }
+
+  .side-nav ul li a {
+    padding-left: 3.5em;
+    /* border-right: .40em solid #fff; */
+  }
+
+  .side-nav ul li a:hover {
+    /* border-right: .40em solid #fff; */
+  }
+}

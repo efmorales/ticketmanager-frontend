@@ -1,0 +1,74 @@
+.create-project-container{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* justify-content: center; */
+    gap: 1rem;
+    margin-left: 1rem;
+}
+
+.create-project-name-div, .create-project-description-div, .create-project-search-div {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.create-project-name-div > label, .create-project-description-div > label, .create-project-search-div > label, .create-project-members-div > h3 {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.create-project-members-div > h3 {
+    margin-left: 1rem;
+    padding: 0;
+}
+
+.create-project-name-div > input, .create-project-description-div > textarea, .create-project-search-div > input {
+    padding: 0.5rem;
+    width: 80%;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+.create-project-search-div > button {
+    padding: 0.5rem;
+    width: 30%;
+    border-radius: 0.5rem;
+    border: 1px solid #2151C5;
+    font-size: 1rem;
+    background-color: #2151C5;
+    color: white;
+    cursor: pointer;
+    margin-top: 1rem;
+
+}
+
+/* h3 {
+    margin: 0;
+    margin-left: 1rem;
+    padding: 0;
+} */
+
+.create-project-submit-button{
+    padding: 0.5rem;
+    width: 50%;
+    border-radius: 0.5rem;
+    border: 1px solid #2151C5;
+    font-size: 1rem;
+    background-color: #2151C5;
+    color: white;
+    cursor: pointer;
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+.add-user-icon {
+
+    margin-left: 1rem;
+}
+
+.create-project-search-div > ul > li {
+    margin: 1rem;
+}
