@@ -1,14 +1,11 @@
 import { useState } from "react";
 import api from "../../auth/api";
-import { useAuth } from "../../auth/AuthContext"
 
-const NewOrganization = () => {
-  
-  const { loggedInUser } = useAuth();
+const NewOrganization = ( { userData } ) => {
   
   const formReset = {
     name: "",
-    owner: loggedInUser._id,
+    owner: userData._id,
     description: "",
   };
   

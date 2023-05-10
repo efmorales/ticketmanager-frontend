@@ -9,10 +9,11 @@ import "./UserOrganizations.css";
 import axios from "axios";
 
 const UserOrganizations = () => {
-  const userOrgsData = useLoaderData();
+  const [ userData, userOrgsData ] = useLoaderData();
 
   const [userOrgs] = useState(userOrgsData);
   const [isListSelected, setIsListSelected] = useState(true);
+
 
   const handleToggle = () => {
     setIsListSelected(!isListSelected);
@@ -37,7 +38,7 @@ const UserOrganizations = () => {
         {isListSelected ? (
           <UserOrganizationsList userOrgs={userOrgs} />
         ) : (
-          <NewOrganization />
+            <NewOrganization userData={ userData } />
         )}
       </div>
     </div>
@@ -61,10 +62,14 @@ export const loader = async () => {
       );
 
       if (data) {
-        const userOrgsData = await axios.get(
+        const userOrgs = await axios.get(
           `${process.env.REACT_APP_API_URL}/users/user/organizations/${data.user._id}`
         );
-        return userOrgsData.data.userOrganizations;
+
+        const userData = data.user
+
+        const userOrgsData = userOrgs.data.userOrganizations;
+        return [ userData, userOrgsData ]
       }
     } catch (error) {
       return console.log(error);
