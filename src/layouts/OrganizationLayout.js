@@ -8,7 +8,7 @@ import "./UserAndOrganizationLayout.css";
 
 const OrganizationLayout = () => {
   const orgData = useLoaderData();
-  const { organization, members } = orgData;
+  const { organization } = orgData;
 
   const [openMenu, setOpenMenu] = useState(false);
 
